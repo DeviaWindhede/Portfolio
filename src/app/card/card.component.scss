@@ -1,1 +1,107 @@
-@import 'styles'
+@import 'styles';
+@import '../main.scss';
+
+.c-card {
+    border-radius: $border-radius;
+    font-size: 0.8239746086rem;
+    height: $card-height;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    text-align: center;
+  }
+  .c-card:after {
+    background: $dark;
+    content: "";
+    display: inherit;
+    height: 100%;
+    z-index: 0;
+  }
+  .c-card__image {
+    margin: 0;
+  }
+  .c-card__image > a {
+    display: block;
+    overflow: hidden;
+    position: relative;
+  }
+  .c-card__image > a:after {
+    background: $dark;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: $card-opacity;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .c-card__image img {
+    display: block;
+    height: $card-height;
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 100%;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .c-card:hover .c-card__image > a:after {
+    background: $dark;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: $card-accent-opacity;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  .c-card:hover .c-card__image img {
+    -webkit-transform: scale(1.25);
+            transform: scale(1.25);
+  }
+  .c-card__header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .c-card__header > h2 {
+    font-size: clamp(1.1377777785rem, 1.1377777785rem + 0.1567604947 * ((100vw - 20rem) / 46), 1.2945382732rem);
+    margin-top: 0.5rem;
+  }
+  .c-card__header > h2 > a {
+    color: $white;
+    text-decoration: none;
+    -webkit-transition: all 0.12s linear 0s;
+    transition: all 0.12s linear 0s;
+  }
+  .c-card__header > h2 > a:hover {
+    color: $white;
+  }
+  .c-card__header > h2 > a:active {
+    color: $white;
+  }
+  .c-card__header > h2 > a:focus {
+    color: $white;
+    outline: none;
+  }
+  .c-card__header > h2 > a::before {
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+  }
+  .c-card__header > p {
+    color: $white;
+    font-size: 0.6789341556rem;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
