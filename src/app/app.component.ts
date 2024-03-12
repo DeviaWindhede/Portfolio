@@ -21,9 +21,10 @@ export class AppComponent {
     var header = document.getElementById("js-top");
     
     this.last_scroll_position = window.scrollY;
+    const scrollPos = 250;
 
     // Scrolling down
-    if (this.new_scroll_position < this.last_scroll_position && this.last_scroll_position > 184) {
+    if (this.new_scroll_position < this.last_scroll_position && this.last_scroll_position > scrollPos) {
       // header?.classList.remove("is-visible");
       // header?.classList.add("is-hidden");
       
@@ -36,7 +37,7 @@ export class AppComponent {
       header?.classList.add("is-visible");
     }
 
-    if (this.last_scroll_position < 184) {
+    if (this.last_scroll_position < scrollPos) {
       header?.classList.remove("is-visible");
     }
 
