@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LazyImgDirective } from '../lazy-img.directive';
 import { RouterModule } from '@angular/router';
 
@@ -10,5 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-
+  @Input({ required: true }) name!: string;
+  @Input({ required: true }) path!: string;
 }

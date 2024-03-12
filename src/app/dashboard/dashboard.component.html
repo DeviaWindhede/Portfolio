@@ -5,7 +5,7 @@
     <h1>The Tattoo blog</h1>
     <address>by <a href="/authors/devia/index.html">Devia Windhede</a></address>
     refreshed
-    <time datetime="2024-03-05T10:31">5 March 2024</time>
+    <!-- <time datetime="2024-03-05T10:31">5 March 2024</time> -->
     </header>
     <figure class="hero__image">
         <img
@@ -25,10 +25,5 @@
     </figure>
 </div>
 <div class="l-grid l-grid--2">
-    <app-card></app-card>
-    <app-card></app-card>
-    <app-card></app-card>
-    <app-card></app-card>
-    <app-card></app-card>
-    <app-card></app-card>
+    <app-card *ngFor="let card of cardData" [name]="card.name" [path]="card.routerLink"></app-card>
 </div>
