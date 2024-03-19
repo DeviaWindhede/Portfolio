@@ -1,0 +1,19 @@
+<header class="top" id="js-top" [ngClass]="{
+        'is-visible' : myShouldMinimize
+    }">
+    <div>
+        <a class="logo" routerLink="">Devia Windhede</a>
+        <nav class="navbar">
+            <button class="navbar__toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+            <span class="navbar__toggle-box">
+                <span class="navbar__toggle-inner">Menu</span>
+            </span>
+            </button>
+            <ul class="navbar__menu">
+                <li><a routerLink="vertex-painter">Specialization</a></li>
+                <li><a routerLink="/contact" target="_self">Contact</a></li>
+                <li><a routerLink="/about" target="_self">About</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>

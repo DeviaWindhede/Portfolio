@@ -1,10 +1,9 @@
 
 <div class="hero hero--full">
     <header>
+        <h1>Specialize in Graphics and System implementation</h1>
     <p>My blog stories</p>
-    <h1>The Tattoo blog</h1>
-    <address>by <a href="/authors/devia/index.html">Devia Windhede</a></address>
-    refreshed
+    <!-- <address>by <a href="/authors/devia/index.html">Devia Windhede</a></address> -->
     <!-- <time datetime="2024-03-05T10:31">5 March 2024</time> -->
     </header>
     <figure class="hero__image">
@@ -24,6 +23,9 @@
             alt="">
     </figure>
 </div>
+<div class="l-grid l-grid--2 first-element">
+    <app-card [cardData]="cardData[0]"></app-card>
+</div>
 <div class="l-grid l-grid--2">
-    <app-card *ngFor="let card of cardData" [name]="card.name" [path]="card.routerLink"></app-card>
+    <app-card *ngFor="let card of cardData | slice: 1" [cardData]="card"></app-card>
 </div>

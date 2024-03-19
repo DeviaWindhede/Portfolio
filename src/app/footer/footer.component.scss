@@ -1,0 +1,74 @@
+@import 'main';
+
+.footer{
+    background:$dark;
+    overflow:hidden;
+    padding:calc(2.25rem + 1vw) 0 calc(3rem + 1.5vw);
+    margin:calc(2.25rem + .5vw) 0 0;
+    text-align: center;
+
+    &__copyright {
+        color:$gray-2;
+        font-size:.6789341556rem;
+        letter-spacing:1px;
+        text-transform:uppercase
+    }
+
+    &__bttop {
+        bottom: 1.25rem;
+        border-radius: 50%;
+        line-height: 1;
+        padding: .45rem;
+        position: fixed;
+        right: 2rem;
+        text-align: center;
+        width: auto !important;
+        z-index: 999;
+        visibility: visible;
+        opacity: 1;
+        // opacity:0;
+        // visibility:hidden;
+    }
+
+    &__bttop:hover {
+        opacity:1
+    }
+
+    &__bttop > svg {
+        fill:$white;
+        height:23px;
+        margin:0;
+        width:23px
+    }
+
+    // &__bttop.is-visible {
+    //     visibility:visible;
+    //     opacity:1
+    // }
+
+    &__social svg{
+        fill:$white;
+        height:1rem;
+        margin:1.5rem .375rem 0;
+        opacity:.6;
+        -webkit-transition:all .12s linear 0s;
+        transition:all .12s linear 0s;
+        width:1rem
+    }
+
+    &__social svg:hover{
+        opacity:1
+    }
+}
+.footer a {
+    color:$white
+}
+.footer a:hover {
+    color:rgba(255,255,255,.7)
+}
+
+@media all and (min-width:56.25em){
+    .footer__bttop{
+        bottom:2.5rem
+    }
+}

@@ -1,37 +1,8 @@
 <div class="container">
-  <header class="top" id="js-top">
-    <div>
-      <a class="logo" href="index.html">Devia Windhede</a>
-      <nav class="navbar">
-        <button class="navbar__toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
-          <span class="navbar__toggle-box">
-            <span class="navbar__toggle-inner">Menu</span>
-          </span>
-        </button>
-        <ul class="navbar__menu">
-          <li><a routerLink="/specialization" target="_self">Specialization</a></li>
-          <li><a routerLink="/contact" target="_self">Contact</a></li>
-          <li><a routerLink="/about" target="_self">About</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <app-header></app-header>
   <main>
     <router-outlet></router-outlet>
   </main>
 </div>
 
-<footer class="footer">
-  <div class="footer__copyright">
-    <p>Powered by Publii</p>
-  </div>
-  <div class="footer__social">
-    <a href="https://www.linkedin.com/in/devia-windhede/" aria-label="LinkedIn" class="linkedin">
-      <svg><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-    </a>
-  </div>
-  <button onclick="backToTopFunction()" id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top">
-          <svg><use xlink:href="/assets/svg/svg-map.svg#toparrow"/></svg>
-  </button>
-</footer> 
-
+<app-footer></app-footer>
