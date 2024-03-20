@@ -1,0 +1,90 @@
+@import 'styles';
+
+.top {
+    height: $header-height;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 0 $page-margin;
+    z-index: 99;
+    background-color: $white;
+}
+@media all and (min-width: 56.25em) {
+.top {
+    height: auto;
+    max-height: 9.5rem;
+}
+}
+.top > div {
+    align-items: center;
+    display: grid;
+    height: 100%;
+    margin: 0 auto;
+    max-width: $page-width;
+    position: relative;
+    width: 100%;
+}
+@media all and (max-width: 56.1875em) {
+.top > div {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: "logo search menu";
+}
+}
+.top.is-visible {
+    align-items: center;
+    background: $white;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    height: $header-height;
+    opacity: 1;
+    padding: 0 $page-margin;
+    position: fixed;
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    -webkit-transition: height 0.3s, background 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+    transition: height 0.3s, background 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+    transition: transform 0.24s, height 0.3s, background 0.3s, opacity 0.24s;
+    transition: transform 0.24s, height 0.3s, background 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+    -webkit-transition-delay: 0.05s;
+            transition-delay: 0.05s;
+}
+@media all and (min-width: 56.25em) {
+.top.is-visible > div {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: "logo menu search";
+    margin: 0 auto;
+    max-width: $page-width;
+}
+}
+.top.is-visible .logo {
+    font-size: 1.7875512975rem;
+    grid-area: logo;
+    padding: 0;
+    text-align: left;
+}
+.top.is-visible .navbar {
+    text-align: right;
+}
+.top.is-visible .navbar__toggle {
+    height: auto;
+}
+.top.is-visible .search__input {
+    font-size: 1.4728968807rem;
+}
+.top.is-visible .search__btn {
+    position: relative;
+    margin-left: 1rem;
+    right: 0;
+    top: 0;
+}
+
+.top.is-hidden {
+    opacity: 0;
+    -webkit-transform: translate(0, -86px);
+            transform: translate(0, -86px);
+    -webkit-transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+    transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+    transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s;
+    transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+}
