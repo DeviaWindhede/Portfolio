@@ -50,11 +50,37 @@
     </div>
 
     <div class="post__entry">
-        <p>Abstract</p>
-        <p> </p>
-        <p>Content</p>
-        <pre><code>{{this.codeContainer[0]}}</code></pre>
-        <pre><code>{{this.codeContainer[1]}}</code></pre>
+        <h3>Summary</h3>
+        <p>
+            An Entity Component System implementation that utilizes signatures.
+            Addtionally, this implementation use static polymorphism for indexing and
+            constant look up time and assignment within all component related containers.
+        </p>
+        
+        <hr>
+
+        <h3>Why ECS?</h3>
+        <p> 
+            When writing a game engine, using some type of component system is a common approach for modular development.
+            However since these components need to be stored somewhere, it can result in unaligned memory which can significantly slow
+            down the performance of the application due to system cache. Addtionally, inheritance can become a huge issue as the
+            scale of the project increases with time.
+            Using an Entity-Component-System is an approach to solve this problem.
+            <br><br>
+            An ECS uses a data driven style of development and has all components aligned in memory, similar to the object pool pattern.
+            One of the side effects to this approach is accessing and manipulating blocks of memory becomes VERY easy!
+            And as a person who specializes in core engine and graphics programming, this was the primary reason to me pushing for using
+            this when developing our custom engine for our studies at The Game Assembly!
+            <br><br>
+            In this post, I will go through the steps I took during the development of our game engines ECS implementation!
+            It is not perfect and does have room for improvement, but it can still maybe be an interesting read!
+        </p>
+
+        <h3>Implementation</h3>
+        <p>
+            implementation text
+        </p>
+
         <img
             src="/assets/img/posts/ecs/content/uml.png"
             sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
@@ -62,9 +88,49 @@
             width="960"
             alt="">
 
-        <p>Result</p>
-        <p> </p>
-        <p> </p>
+        <h4>Performance issues :c</h4>
+        <p>
+            When initially implementing the ECS, getting a working look-up table is really important.
+            So the most obvious way of doing this is by using the <code>std::unordered_map</code> container.
+            However since the systems will perform <b>A LOT</b> of <code>GetComponent</code> calls, the performance losses
+            from using a map really starts to add up! It also only gets worse with each additional component in the ECS!
+        </p>
+        <h4>Solution!</h4>
+        <p>
+            Using the Curiously recurring template pattern (CRTP) you are able to use static polymorphism, and
+            so by storing the component container index in the component itself instead, you are able to get 
+            the index directly from the templated variable without knowning the type! Therefore bypassing the need for 
+            a look up table for Component->ComponentContainer
+        </p>
+        <pre><code>{{this.codeContainer[0]}}</code></pre>
+        <pre><code>{{this.codeContainer[1]}}</code></pre>
+        <p>
+            You may notice at all container poiner locations can also be block allocated, which 
+            it is not at the moment. So a potential improvement for this would be to pool allocate the containers!
+        </p>
+
+        <!-- <li>
+            Pros
+            <ul>pro</ul>
+            <ul>pro</ul>
+            <ul>pro</ul>
+            <ul>pro</ul>
+        </li>
+        <br>
+        <li>
+            Cons
+            <ul>con</ul>
+            <ul>con</ul>
+            <ul>con</ul>
+            <ul>con</ul>
+        </li> -->
+
+        <h3>Conclusion</h3>
+        <p>
+            This is the ECS that is being used in the custom game engine we made at The Game Assembly, 
+            and it has worked really well! I really do recommend implementing an ECS if you haven't already! 
+            The source code for our implementation will be linked at a later date on this page! 
+        </p>
     </div>
     <aside>
         <div class="post__share">
@@ -72,14 +138,17 @@
         </div>
     </aside>
     <footer>
-        <nav class="post__nav">
+        <div class="center-parent-element">
+            <button>Back to top</button>
+        </div>
+        <!-- <nav class="post__nav">
             <div class="post__nav__next">Next Post
                 <h3 class="h5">
                     <a routerOutlet="/vertex-painter" class="inverse" rel="next">Signature ECS with optimizations using CRTP</a>
                 </h3>
             </div>
-        </nav>
-        <div class="post__related">
+        </nav> -->
+        <!-- <div class="post__related">
             <h3>Related posts</h3>
             <div class="post__related__wrap">
                 <figure>
@@ -94,6 +163,6 @@
                     </figcaption>
                 </figure>
             </div>
-        </div>
+        </div> -->
     </footer>
 </article>
