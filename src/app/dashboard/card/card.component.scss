@@ -46,7 +46,7 @@
   transition: all 0.3s ease-out;
 }
 .c-card:hover .c-card__image > a:after {
-  background: $dark;
+  background: $palette-3;
   content: "";
   height: 100%;
   left: 0;
@@ -56,8 +56,8 @@
   width: 100%;
 }
 .c-card:hover .c-card__image img {
-  -webkit-transform: scale(1.25);
-          transform: scale(1.25);
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
 }
 .c-card__header {
   position: absolute;
@@ -66,6 +66,7 @@
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   z-index: 1;
+  text-shadow: black 1px 0 10px;
 }
 .c-card__header > h2 {
   font-size: clamp(1.1377777785rem, 1.1377777785rem + 0.1567604947 * ((100vw - 20rem) / 46), 1.2945382732rem);

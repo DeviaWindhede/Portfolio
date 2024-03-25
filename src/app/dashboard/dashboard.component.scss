@@ -1,4 +1,98 @@
+@import "main";
+
 .first-element {
     grid-template-columns: repeat(1, 1fr);
     margin-bottom: 0.75rem;
+    vertical-align: middle;
 }
+
+
+.project-grid {
+    display: grid;
+    grid-gap: $grid-gap;
+    margin: 0;
+}
+  @media all and (min-width: 37.5em) {
+    .project-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  @media all and (min-width: 56.25em) {
+    .project-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media all and (min-width: 75em) {
+    .project-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media all and (min-width: 75em) {
+    .project-grid--1 .c-card:nth-child(7n-2) {
+      grid-column: span 2;
+    }
+    .project-grid--1 .c-card:nth-child(7n-2) h2 {
+      font-size: 2.1694252211rem;
+    }
+  }
+  .project-grid--1 .c-card:nth-child(6n-5) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  @media all and (min-width: 75em) {
+    .project-grid--2 .c-card:nth-child(5n) {
+      grid-column: span 2;
+    }
+    .project-grid--2 .c-card:nth-child(5n) h2 {
+      font-size: 2.1694252211rem;
+    }
+  }
+  .project-grid--2 .c-card:nth-child(8n-6) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  @media all and (min-width: 75em) {
+    .project-grid--3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media all and (min-width: 75em) {
+    .project-grid--3 .c-card:nth-child(2n) {
+      grid-column: span 1;
+    }
+  }
+  .project-grid--3 .c-card:nth-child(8n-6) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  @media all and (min-width: 75em) {
+    .project-grid--4 .c-card:nth-child(5n) {
+      grid-column: span 4;
+    }
+    .project-grid--4 .c-card:nth-child(5n) h2 {
+      font-size: 2.1694252211rem;
+    }
+  }
+  .project-grid--4 .c-card:nth-child(8n-6) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  @media all and (min-width: 37.5em) {
+    .project-grid--5 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .project-grid--5 .c-card:nth-child(5n-2) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  @media all and (min-width: 37.5em) {
+    .project-grid--6 {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  .project-grid--6 .c-card:nth-child(3n) .c-card__image > a:after {
+    background: $color;
+    opacity: $card-accent-opacity;
+  }
+  

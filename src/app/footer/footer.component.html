@@ -7,7 +7,7 @@
             <svg><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
         </a>
     </div>
-    <button onclick="backToTopFunction()" id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top">
+    <button (click)="backToTopFunction()" [ngClass]="backToTopClass" class="footer__bttop" aria-label="Back to top" title="Back to top">
         <svg><use xlink:href="/assets/svg/svg-map.svg#toparrow"/></svg>
     </button>
 </footer> 

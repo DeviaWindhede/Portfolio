@@ -24,10 +24,8 @@
         text-align: center;
         width: auto !important;
         z-index: 999;
-        visibility: visible;
-        opacity: 1;
-        // opacity:0;
-        // visibility:hidden;
+        opacity:0;
+        visibility:hidden;
     }
 
     &__bttop:hover {

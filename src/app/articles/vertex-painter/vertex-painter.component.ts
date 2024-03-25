@@ -15,4 +15,8 @@ export class VertexPainterComponent {
     }`,
     'test2', 'test3', 'test4', 'test5'
   ];
+  
+	backToTop(): void {
+		window.scrollTo(0, 0);
+	}
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,13 @@ import { FooterComponent } from './footer/footer.component';
 })
 export class AppComponent {
   title = 'portfolio';
+
+  
+  constructor(
+    router: Router
+  ) {
+    router.events.pipe(
+      filter((routerEvent: Event) => routerEvent instanceof NavigationEnd)
+    ).subscribe(() => window.scrollTo(0, 0));
+  }
 }
