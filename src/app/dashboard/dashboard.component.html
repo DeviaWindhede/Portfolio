@@ -1,8 +1,7 @@
 
 <div class="hero hero--full">
     <header>
-        <h1>Specialize in Graphics and System implementation</h1>
-    <p>My blog stories</p>
+        <h1>Graphics and Core Engine programmer</h1>
     <!-- <address>by <a href="/authors/devia/index.html">Devia Windhede</a></address> -->
     <!-- <time datetime="2024-03-05T10:31">5 March 2024</time> -->
     </header>
@@ -23,113 +22,100 @@
             alt="">
     </figure>
 </div>
-<div class="l-grid l-grid--2 first-element">
-    <app-card [cardData]="cardData[0]"></app-card>
-</div>
-<div class="l-grid l-grid--2">
-    <app-card *ngFor="let card of cardData | slice: 1" [cardData]="card"></app-card>
+<div>
+    <h2>Articles</h2>
+    <div class="l-grid l-grid--2 first-element">
+        <app-card [cardData]="cardData[0]"></app-card>
+    </div>
+    <div class="l-grid l-grid--2">
+        <app-card *ngFor="let card of cardData | slice: 1" [cardData]="card"></app-card>
+    </div>
 </div>
 
 <hr>
 
-
-<div *ngFor="let data of gameProjectData; let i = index">
-    <div class="project-grid" *ngIf="i % 2 == 0">
-        <div>
-            <h3>{{data.name}}</h3>
+<div>
+    <h2>Game Projects</h2>
+    <div *ngFor="let data of gameProjectData; let i = index">
+        <div class="project-grid" *ngIf="i % 2 == 0">
+            <div class="project-grid--text">
+                <h3>{{data.name}}</h3>
+                <div>
+                    <b>Genre </b>{{data.genre}}
+                    <br>
+                    <b>Time Frame </b>{{data.time}} hours
+                    <br>
+                    <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
+                    <br>
+                    <b>Engine </b>{{data.engine}}
+                    <br>
+                    
+                    <h4 style="margin-top: 12px">Contributions</h4>
+                    <ul>
+                        <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
+                    </ul>
+                </div>
+            </div>
             <div>
-                <b>Genre </b>{{data.genre}}
-                <br>
-                <b>Time Frame </b>{{data.time}} hours
-                <br>
-                <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
-                <br>
-                <b>Engine </b>{{data.engine}}
-                <br>
-                
-                <h4 style="margin-top: 12px">Contributions</h4>
-                <ul>
-                    <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
-                </ul>
+                <img
+                    src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
+                    srcset="
+                    {{
+                        '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
+                    }}"
+                    sizes="100vw"
+                    loading="eager"
+                    width="960"
+                    height="720"
+                    alt="">
             </div>
         </div>
-        <div>
-            <img
-                src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
-                srcset="
-                {{
-                    '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
-                }}"
-                sizes="100vw"
-                loading="eager"
-                width="960"
-                height="720"
-                alt="">
-        </div>
-    </div>
-    
-    <div class="project-grid" *ngIf="i % 2 == 1">
-        <div>
-            <img
-                src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
-                srcset="
-                {{
-                    '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
-                    '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
-                }}"
-                sizes="100vw"
-                loading="eager"
-                width="960"
-                height="720"
-                alt="">
-        </div>
-        <div>
-            <h3>{{data.name}}</h3>
+        
+        <div class="project-grid" *ngIf="i % 2 == 1">
             <div>
-                <b>Genre </b>{{data.genre}}
-                <br>
-                <b>Time Frame </b>{{data.time}} hours
-                <br>
-                <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
-                <br>
-                <b>Engine </b>{{data.engine}}
-                <br>
-                
-                <h4 style="margin-top: 12px">Contributions</h4>
-                <ul>
-                    <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
-                </ul>
+                <img
+                    src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
+                    srcset="
+                    {{
+                        '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
+                        '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
+                    }}"
+                    sizes="100vw"
+                    loading="eager"
+                    width="960"
+                    height="720"
+                    alt="">
+            </div>
+            <div class="project-grid--text">
+                <h3>{{data.name}}</h3>
+                <div>
+                    <b>Genre </b>{{data.genre}}
+                    <br>
+                    <b>Time Frame </b>{{data.time}} hours
+                    <br>
+                    <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
+                    <br>
+                    <b>Engine </b>{{data.engine}}
+                    <br>
+                    
+                    <h4 style="margin-top: 12px">Contributions</h4>
+                    <ul>
+                        <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
+                    </ul>
+                    <div *ngIf="data.link !== undefined">
+                        Available Here: <a href="{{data.link.destination}}" class="underline">{{data.link.preview}}</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <div *ngFor="let data of gameProjectData; let i = index">
-  <div *ngIf="i % 2 == 0" class="float-container">
-    <div class="float-child">
-        <div class="green">{{data.name}}</div>
-    </div>
-    
-    <div class="float-child">
-        <div class="blue">{{data.data[0]}}</div>
-    </div>
-  </div>
-  <div *ngIf="i % 2 == 1" class="float-container">
-    <div class="float-child">
-        <div class="green">{{data.data[0]}}</div>
-    </div>
-    
-    <div class="float-child">
-        <div class="blue">{{data.name}}</div>
-    </div>
-    </div>
-</div> -->

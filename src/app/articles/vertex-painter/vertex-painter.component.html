@@ -1,34 +1,7 @@
-<!-- <!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vertex Painter supporting instanced drawing using texture sampling in vertex shader - Devia Windhede</title><meta name="description" content="Abstract Content void someFunc() { } Result"><meta name="generator" content="Publii Open-Source CMS for Static Site">
-
-
-
-<link rel="stylesheet" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/media/plugins/syntaxHighlighter/prism-black.css">
-<link rel="canonical" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html">
-<link rel="alternate" type="application/atom+xml" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/feed.xml">
-<link rel="alternate" type="application/json" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/feed.json">
-
-<meta property="og:title" content="Vertex Painter supporting instanced drawing using texture sampling in vertex shader">
-<meta property="og:image" content="file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/media/posts/4/place-holde.png">
-<meta property="og:image:width" content="960"><meta property="og:image:height" content="720"><meta property="og:site_name" content="Devia Windhede">
-<meta property="og:description" content="Abstract Content void someFunc() { } Result">
-<meta property="og:url" content="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html">
-<meta property="og:type" content="article"><link rel="stylesheet" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/assets/css/style.css?v=1faeab3de3757dfd2876bbb1f067cd12">
-<script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"file:///C:\\Users\\Devia\\Documents\\Publii\\sites\\devia-windhede\\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html"},"headline":"Vertex Painter supporting instanced drawing using texture sampling in vertex shader","datePublished":"2024-02-27T12:46","dateModified":"2024-02-27T13:03","image":{"@type":"ImageObject","url":"file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/media/posts/4/place-holde.png","height":720,"width":960},"description":"Abstract Content void someFunc() { } Result","author":{"@type":"Person","name":"Devia Windhede","url":"file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/authors/devia/"},"publisher":{"@type":"Organization","name":"Devia Windhede"}}
-</script><noscript>
-    
-    <style>
-    img[loading] {
-        opacity: 1;
-    }
-    </style>
-    </noscript>
-</head> -->
-
-
 <article class="post wrapper">
     <div class="hero hero--full">
         <header>
-            <h1>Vertex Painter supporting instanced drawing using texture sampling in vertex shader</h1>
+            <h1>Vertex Painter with instanced rendering support using texture stored vertex colors</h1>
         </header>
         <figure class="hero__image post__featured-image">
             <img
@@ -53,26 +26,53 @@
     <div class="post__entry">
         <h3>Summary</h3>
         <p>
-            An Entity Component System implementation that utilizes signatures.
-            Addtionally, this implementation use static polymorphism for indexing and
-            constant look up time and assignment within all component related containers.
+            A Vertex Painter that stores vertex colors within a texture instead of 
+            the model. Each texel represents a vertex and its corresponding color. 
+            One texture is generated for each mesh that has been painted in a scene (including sub-meshes). 
+            Sub mesh index is represented with a <code>_x</code> postfix.
+            <br>
+            These textures can vary in size and is 
+            determined whilst painting depending on how many meshes have been painted on. 
+            <br>
+            A binary file which includes all material binding information is also generated, and is read from 
+            on scene load. 
         </p>
-        
+        <p>
+            The generated folder structure looks something like this
+        </p>
+        <pre>{{this.exampleFolderStructure}}</pre>
         <hr>
 
-        <h3>Implementation</h3>
+        <h3>How painting works</h3>
         <p>
-            Text
+            The painter itself works by sampling the G-buffer (we use a deferred rendering method within our engine) 
+            in editor view to get meshes' world positions and EntityIDs in order to both get active meshes with in a scene, and to 
+            translate the screen space mouse position to world position coordinates   
+            <i>(The world position could be reconstructed from the depth buffer, but it we have this RTV for convenience 
+                and debugging with minial performance losses)</i>. 
+            When world space coordinates are retrieved, the relative position in model space is then compared to all vertices within 
+            all meshes within the brush radius to find the intersecting verts. 
         </p>
-        
+
+        <b>cool gif om mesh intersections!! coolt om det fanns decaler för visualisering</b>
+        <img
+            src="/assets/img/website/place-holde.png"
+            srcset="
+            /assets/img/website/responsive/place-holde-xs.png 300w,
+            /assets/img/website/responsive/place-holde-sm.png 480w,
+            /assets/img/website/responsive/place-holde-md.png 768w,
+            /assets/img/website/responsive/place-holde-lg.png 1024w,
+            /assets/img/website/responsive/place-holde-xl.png 1360w,
+            /assets/img/website/responsive/place-holde-2xl.png 1600w"
+            sizes="100vw"
+            loading="eager"
+            width="960"
+            height="720"
+            alt=""
+        >
+
         <br>
-
-        <h4>EntityManager</h4>
-        <p>
-            EntityManager text
-        </p>
-
-        <pre><code>{{this.codeContainer[0]}}</code></pre>
+        
         <h3>Conclusion</h3>
         <p>
             

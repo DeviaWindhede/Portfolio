@@ -9,8 +9,12 @@
 
 .project-grid {
     display: grid;
-    grid-gap: $grid-gap;
+    grid-gap: 0px;
     margin: 0;
+
+    &--text {
+        padding-left: 24px;
+    }
 }
   @media all and (min-width: 37.5em) {
     .project-grid {

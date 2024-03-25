@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LazyImgDirective } from '../../lazy-img.directive';
 
 @Component({
   selector: 'app-ecs',
   standalone: true,
-  imports: [ RouterModule ],
+  imports: [ RouterModule, LazyImgDirective ],
   templateUrl: './ecs.component.html',
   styleUrl: './ecs.component.scss'
 })

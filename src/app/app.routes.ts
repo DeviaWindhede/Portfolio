@@ -5,7 +5,7 @@ import { EcsComponent } from './articles/ecs/ecs.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'vertex-painter', component: VertexPainterComponent },
-    { path: 'ecs', component: EcsComponent }
+    { path: 'dashboard', component: DashboardComponent, title: 'Devia Windhede' },
+    { path: 'vertex-painter', component: VertexPainterComponent, title: 'Vertex Painter' },
+    { path: 'ecs', component: EcsComponent, title: 'S-ECS' }
 ];
