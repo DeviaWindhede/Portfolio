@@ -1,5 +1,8 @@
 {
   "routes": [
-    "/"
+    "/about",
+    "/dashboard",
+    "/ecs",
+    "/vertex-painter"
   ]
 }
