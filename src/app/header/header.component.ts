@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   myShouldMinimize: boolean = false;
 
-  constructor() {
+  constructor(private scroller: ViewportScroller) {
   }
   
   ngOnInit() {
@@ -47,5 +47,13 @@ export class HeaderComponent implements OnInit {
     }
 
     this.myNewScrollPosition = this.myLastScrollPosition;
+  }
+
+  scroll(anchor: string): void {
+    this.scroller.scrollToAnchor(anchor)
+  }
+  
+  scrollToElement(element: HTMLElement): void {
+    element.scrollIntoView();
   }
 }

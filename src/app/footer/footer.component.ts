@@ -15,7 +15,6 @@ export class FooterComponent {
   
   @HostListener("window:scroll", ['$event'])
   onWindowScroll(event: any) {
-    console.log(window.scrollY);
     if (window.scrollY > 400 )
     {
       this.backToTopClass = "is-visible";

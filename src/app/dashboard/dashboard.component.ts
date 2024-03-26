@@ -221,10 +221,19 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getHeroes();
+    // if(window.location.hash) {
+    //   document.querySelector(window.location.hash)?.scrollIntoView();
+    // }
+    // document.querySelector('#games')?.scrollIntoView();
   }
 
   // getHeroes(): void {
   //   this.heroService.getHeroes()
   //     .subscribe(heroes => this.heroes = heroes.slice(1, 5));
   // }
+
+  scrollToElement(element: HTMLElement): void {
+    // element.scrollIntoView();
+    document.querySelector('#games')?.scrollIntoView();
+  }
 }
