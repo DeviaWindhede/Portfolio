@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'
+import { Component, Inject, OnInit } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common'
 import { CardComponent } from './card/card.component';
 import { LazyImgDirective } from '../lazy-img.directive';
 import { CardData } from '../app-definitions';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { switchMap, take } from 'rxjs';
 
 class Team
 {
@@ -37,7 +38,7 @@ class GameProject
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   cardData: CardData[] = [
     { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter" },
     { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs" },
@@ -219,21 +220,31 @@ export class DashboardComponent implements OnInit {
 
   // constructor(private heroService: HeroService) { }
 
-  ngOnInit(): void {
-    // this.getHeroes();
-    // if(window.location.hash) {
-    //   document.querySelector(window.location.hash)?.scrollIntoView();
-    // }
-    // document.querySelector('#games')?.scrollIntoView();
+  constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
+    route.fragment.subscribe(async val => {
+      const elm: any = await this.waitForElm(window.location.hash);
+      elm.scrollIntoView();
+    });
   }
 
-  // getHeroes(): void {
-  //   this.heroService.getHeroes()
-  //     .subscribe(heroes => this.heroes = heroes.slice(1, 5));
-  // }
+  waitForElm(selector: any): Promise<unknown> {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
 
-  scrollToElement(element: HTMLElement): void {
-    // element.scrollIntoView();
-    document.querySelector('#games')?.scrollIntoView();
-  }
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                observer.disconnect();
+                resolve(document.querySelector(selector));
+            }
+        });
+
+        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
 }

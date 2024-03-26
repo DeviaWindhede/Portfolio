@@ -23,14 +23,6 @@
     </figure>
 </div>
 
-<ul class="navbar__menu">
-    <li><a routerLink="vertex-painter">Specialization</a></li>
-    <li><a (click)="scrollToElement(games)">Game Projects</a></li>
-    <li><a routerLink="." fragment="contact" target="_self">Contact</a></li>
-    <li><a routerLink="/about" target="_self">About</a></li>
-</ul>
-
-
 <div #projects>
     <h2>Projects</h2>
     <div class="l-grid l-grid--2 first-element">
@@ -43,7 +35,7 @@
 
 <hr>
 
-<div #games>
+<div id="games">
     <h2>Game Projects</h2>
     <div *ngFor="let data of gameProjectData; let i = index">
         <div class="project-grid" *ngIf="i % 2 == 0">
@@ -129,7 +121,7 @@
     </div>
 </div>
 
-<div #contact>
+<div id="contact">
     <h2>Contact</h2>
     <p>+46 709 42 26 59</p>
 </div>
