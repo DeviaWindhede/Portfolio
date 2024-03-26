@@ -13,13 +13,18 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'portfolio';
-
   
   constructor(
     router: Router
   ) {
     router.events.pipe(
       filter((routerEvent: Event) => routerEvent instanceof NavigationEnd)
-    ).subscribe(() => window.scrollTo(0, 0));
+    ).subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        if (typeof window !== "undefined" && event.url.lastIndexOf('#') === -1) {
+          window.scrollTo(0, 0);
+        }
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common'
 import { CardComponent } from './card/card.component';
 import { LazyImgDirective } from '../lazy-img.directive';
@@ -38,7 +38,7 @@ class GameProject
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
   cardData: CardData[] = [
     { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter" },
     { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs" },
@@ -221,30 +221,12 @@ export class DashboardComponent {
   // constructor(private heroService: HeroService) { }
 
   constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
-    route.fragment.subscribe(async val => {
-      const elm: any = await this.waitForElm(window.location.hash);
-      elm.scrollIntoView();
-    });
   }
 
-  waitForElm(selector: any): Promise<unknown> {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
-        }
-
-        const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                observer.disconnect();
-                resolve(document.querySelector(selector));
-            }
-        });
-
-        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+  ngAfterViewInit(): void {
+    this.route.fragment.subscribe(val => {
+      const el = this.document.querySelector('#' + val);
+      el?.scrollIntoView();
     });
-}
+  }
 }
