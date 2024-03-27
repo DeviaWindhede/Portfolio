@@ -1,102 +1,146 @@
 @import "main";
 
+$min-hero-section-height: 5rem;
+$max-hero-section-height: 20rem;
+
 .first-element {
     grid-template-columns: repeat(1, 1fr);
     margin-bottom: 0.75rem;
     vertical-align: middle;
 }
 
-
-.project-grid {
-    display: grid;
-    grid-gap: 0px;
-    margin: 0;
-
-    &--text {
-        padding-left: 24px;
-    }
+.scroll-object
+{
+  scroll-margin: $header-height;
 }
-  @media all and (min-width: 37.5em) {
-    .project-grid {
-      grid-template-columns: repeat(1, 1fr);
+
+.hero {
+  background: $hero-bg;
+  margin-bottom: $grid-gap;
+  min-height: $hero-min-height;
+  position: relative;
+  text-align: center;
+  top: 0;
+  z-index: 1;
+  margin-top: calc(2.25rem + 0.5vw);
+
+  &--full {
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  &--section {
+    margin-top: calc(2.25rem + 0.5vw);
+    min-height: $min-hero-section-height;
+  }
+
+  &__image {
+    margin: 0;
+    position: relative;
+  }
+}
+
+.hero:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+@media all and (min-width: 56.25em) {
+  .hero {
+    margin-top: 12.75rem;
+
+    &--section {
+      margin-top: 5.0rem;
     }
   }
-  @media all and (min-width: 56.25em) {
-    .project-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+}
+@media all and (min-width: 56.25em) {
+  .hero--narrow {
+    left: calc((100% - $page-width) / 2);
+    width: $page-width;
   }
-  @media all and (min-width: 75em) {
-    .project-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+}
+.hero > header {
+  color: $white;
+  max-width: $page-width;
+  padding: 0 4%;
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+@media all and (min-width: 56.25em) {
+  .hero > header {
+    max-width: calc($page-width + 8%);
   }
-  @media all and (min-width: 75em) {
-    .project-grid--1 .c-card:nth-child(7n-2) {
-      grid-column: span 2;
-    }
-    .project-grid--1 .c-card:nth-child(7n-2) h2 {
-      font-size: 2.1694252211rem;
-    }
+}
+.hero > header * {
+  color: $white;
+}
+.hero > header h1 {
+  margin-top: 0.5rem;
+}
+.hero > header a:not(.page__desc a) {
+  text-decoration: none;
+}
+.hero > header a:not(.page__desc a):hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+.hero__image::after {
+  background: $hero-bg;
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: $hero-opacity;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &--section {
+    height: $max-hero-section-height;
   }
-  .project-grid--1 .c-card:nth-child(6n-5) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
+}
+.hero__image > img {
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+}
+@media all and (max-width: 56.1875em) {
+  .hero__image > img {
+    min-height: $hero-min-height;
   }
-  @media all and (min-width: 75em) {
-    .project-grid--2 .c-card:nth-child(5n) {
-      grid-column: span 2;
-    }
-    .project-grid--2 .c-card:nth-child(5n) h2 {
-      font-size: 2.1694252211rem;
-    }
+
+  .hero__image--section > img {
+    min-height: $min-hero-section-height;
+    height: 15rem;
   }
-  .project-grid--2 .c-card:nth-child(8n-6) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
+}
+@media all and (min-width: 56.25em) {
+  .hero__image > img {
+    height: $hero-max-height;
   }
-  @media all and (min-width: 75em) {
-    .project-grid--3 {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .hero__image--section > img {
+    height: $max-hero-section-height;
   }
-  @media all and (min-width: 75em) {
-    .project-grid--3 .c-card:nth-child(2n) {
-      grid-column: span 1;
-    }
-  }
-  .project-grid--3 .c-card:nth-child(8n-6) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
-  }
-  @media all and (min-width: 75em) {
-    .project-grid--4 .c-card:nth-child(5n) {
-      grid-column: span 4;
-    }
-    .project-grid--4 .c-card:nth-child(5n) h2 {
-      font-size: 2.1694252211rem;
-    }
-  }
-  .project-grid--4 .c-card:nth-child(8n-6) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
-  }
-  @media all and (min-width: 37.5em) {
-    .project-grid--5 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  .project-grid--5 .c-card:nth-child(5n-2) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
-  }
-  @media all and (min-width: 37.5em) {
-    .project-grid--6 {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
-  .project-grid--6 .c-card:nth-child(3n) .c-card__image > a:after {
-    background: $color;
-    opacity: $card-accent-opacity;
-  }
-  
+}
+.hero__image > figcaption {
+  background: $dark;
+  border-radius: $border-radius;
+  bottom: 4%;
+  color: $white;
+  display: inline-table;
+  padding: 0 0.5rem;
+  position: absolute;
+  right: $page-margin;
+  text-align: left;
+}

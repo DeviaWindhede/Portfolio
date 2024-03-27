@@ -23,7 +23,7 @@
     </figure>
 </div>
 
-<div #projects>
+<div id="projects" class="scroll-object">
     <h2>Projects</h2>
     <div class="l-grid l-grid--2 first-element">
         <app-card [cardData]="cardData[0]"></app-card>
@@ -33,94 +33,29 @@
     </div>
 </div>
 
-<hr>
-
-<div id="games">
-    <h2>Game Projects</h2>
-    <div *ngFor="let data of gameProjectData; let i = index">
-        <div class="project-grid" *ngIf="i % 2 == 0">
-            <div class="project-grid--text">
-                <h3>{{data.name}}</h3>
-                <div>
-                    <b>Genre </b>{{data.genre}}
-                    <br>
-                    <b>Time Frame </b>{{data.time}} hours
-                    <br>
-                    <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
-                    <br>
-                    <b>Engine </b>{{data.engine}}
-                    <br>
-                    
-                    <h4 style="margin-top: 12px">Contributions</h4>
-                    <ul>
-                        <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
-                    </ul>
-                </div>
-            </div>
+<div class="hero hero--full hero--section">
+    <header>
+        <a routerLink="/tga-projects">
             <div>
-                <img
-                    src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
-                    srcset="
-                    {{
-                        '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
-                    }}"
-                    sizes="100vw"
-                    loading="eager"
-                    width="960"
-                    height="720"
-                    alt="">
+                <h1>TGA Projects</h1>
+                <button>Read more</button>
             </div>
-        </div>
-        
-        <div class="project-grid" *ngIf="i % 2 == 1">
-            <div>
-                <img
-                    src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
-                    srcset="
-                    {{
-                        '/assets/img/website/responsive/' + data.imagePath + '-xs.png 300w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-sm.png 480w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-md.png 768w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-lg.png 1024w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-xl.png 1360w, ' +
-                        '/assets/img/website/responsive/' + data.imagePath + '-2xl.png 1600w'
-                    }}"
-                    sizes="100vw"
-                    loading="eager"
-                    width="960"
-                    height="720"
-                    alt="">
-            </div>
-            <div class="project-grid--text">
-                <h3>{{data.name}}</h3>
-                <div>
-                    <b>Genre </b>{{data.genre}}
-                    <br>
-                    <b>Time Frame </b>{{data.time}} hours
-                    <br>
-                    <b>Team </b>{{data.team.programmers}} programmer, {{data.team.artists}} artists, {{data.team.designers}} designers
-                    <br>
-                    <b>Engine </b>{{data.engine}}
-                    <br>
-                    
-                    <h4 style="margin-top: 12px">Contributions</h4>
-                    <ul>
-                        <li *ngFor="let contribution of data.contributions">{{contribution}}</li>
-                    </ul>
-                    <div *ngIf="data.link !== undefined">
-                        Available Here: <a href="{{data.link.destination}}" class="underline">{{data.link.preview}}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </a>
+    </header>
+    <figure class="hero__image hero__image--section">
+        <img
+            src="/assets/img/website/placeholder.gif"
+            loading="eager"
+            width="960"
+            height="720"
+            alt="">
+    </figure>
 </div>
 
-<div id="contact" #contact>
-    <h2>Contact</h2>
+<div id="contact" class="scroll-object">
+    <app-contact></app-contact>
+</div>
+
+<div id="about" class="scroll-object">
+    <app-about></app-about>
 </div>

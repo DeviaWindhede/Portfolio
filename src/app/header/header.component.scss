@@ -79,12 +79,17 @@
     top: 0;
 }
 
-.top.is-hidden {
+.is-hidden {
+    height: $header-height;
     opacity: 0;
-    -webkit-transform: translate(0, -86px);
-            transform: translate(0, -86px);
-    -webkit-transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
-    transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
-    transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s;
-    transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
 }
+
+// .top.is-hidden {
+//     opacity: 0;
+//     -webkit-transform: translate(0, -86px);
+//             transform: translate(0, -86px);
+//     -webkit-transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+//     transition: background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+//     transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s;
+//     transition: transform 0.24s, background 0.3s, color 0.3s, opacity 0.24s, -webkit-transform 0.24s;
+// }

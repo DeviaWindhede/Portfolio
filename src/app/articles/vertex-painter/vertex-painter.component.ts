@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LazyImgDirective } from '../../lazy-img.directive';
+import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top-btn.component';
 
 @Component({
   selector: 'app-vertex-painter',
   standalone: true,
-  imports: [ RouterModule, LazyImgDirective ],
+  imports: [ RouterModule, LazyImgDirective, BackToTopBtnComponent ],
   templateUrl: './vertex-painter.component.html',
   styleUrl: './vertex-painter.component.scss'
 })
@@ -31,8 +32,4 @@ export class VertexPainterComponent {
     │   yetAnotherMesh_0.dds
     │   vertexDefines.data
 `;
-
-	backToTop(): void {
-		window.scrollTo(0, 0);
-	}
 }

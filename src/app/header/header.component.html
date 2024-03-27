@@ -1,4 +1,6 @@
 <header class="top" [ngClass]="{ 'is-visible' : myShouldMinimize }">
+<!-- <header class="top"> -->
+    <!-- <div class="is-hidden"> -->
     <div>
         <a class="logo" routerLink="">Devia Windhede</a>
         <nav class="navbar">
@@ -8,10 +10,11 @@
             </span>
             </button>
             <ul class="navbar__menu">
-                <li><a routerLink="vertex-painter">Specialization</a></li>
-                <li><a routerLink="dashboard" fragment="games" target="_self">Game Projects</a></li>
+                <li><a routerLink="vertex-painter" target="_self">Specialization</a></li>
+                <li><a routerLink="tga-projects" target="_self">TGA Projects</a></li>
+                <li><a routerLink="dashboard" fragment="projects" target="_self">Projects</a></li>
                 <li><a routerLink="dashboard" fragment="contact" target="_self">Contact</a></li>
-                <li><a routerLink="/about" target="_self">About</a></li>
+                <li><a routerLink="dashboard" fragment="about" target="_self">About</a></li>
             </ul>
         </nav>
     </div>

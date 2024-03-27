@@ -3,13 +3,15 @@ import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { filter } from 'rxjs';
+import { WindowRefService } from './window-ref.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [ RouterOutlet, HeaderComponent, FooterComponent ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers: [ WindowRefService ],
 })
 export class AppComponent {
   title = 'portfolio';

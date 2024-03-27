@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LazyImgDirective } from '../../lazy-img.directive';
+import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top-btn.component';
 
 @Component({
   selector: 'app-ecs',
   standalone: true,
-  imports: [ RouterModule, LazyImgDirective ],
+  imports: [ RouterModule, LazyImgDirective, BackToTopBtnComponent ],
   templateUrl: './ecs.component.html',
   styleUrl: './ecs.component.scss'
 })
@@ -68,8 +69,4 @@ private:
 };
 `
 ];
-
-	backToTop(): void {
-		window.scrollTo(0, 0);
-	}
 }
