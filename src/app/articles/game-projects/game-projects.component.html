@@ -26,8 +26,8 @@
 
     <h2>Game Projects</h2>
     <div *ngFor="let data of gameProjectData; let i = index">
-        <div class="project-grid" *ngIf="i % 2 == 0">
-            <div class="project-grid--text">
+        <div class="common-grid" *ngIf="i % 2 == 0">
+            <div class="common-grid--text">
                 <h3>{{data.name}}</h3>
                 <div>
                     <b>Genre </b>{{data.genre}}
@@ -65,7 +65,7 @@
             </div>
         </div>
         
-        <div class="project-grid" *ngIf="i % 2 == 1">
+        <div class="common-grid" *ngIf="i % 2 == 1">
             <div>
                 <img
                     src="{{'/assets/img/website/' + data.imagePath + '.png'}}"
@@ -84,7 +84,7 @@
                     height="720"
                     alt="">
             </div>
-            <div class="project-grid--text">
+            <div class="common-grid--text">
                 <h3>{{data.name}}</h3>
                 <div>
                     <b>Genre </b>{{data.genre}}
