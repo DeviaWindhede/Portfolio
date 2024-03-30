@@ -1,0 +1,9 @@
+{
+  "routes": [
+    "/dashboard",
+    "/ecs",
+    "/friendship-engine",
+    "/tga-projects",
+    "/vertex-painter"
+  ]
+}
