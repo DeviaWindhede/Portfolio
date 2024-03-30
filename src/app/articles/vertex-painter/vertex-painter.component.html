@@ -5,15 +5,7 @@
         </header>
         <figure class="hero__image post__featured-image">
             <img
-                src="/assets/img/preview/vertex-painter/place-holde.png"
-                srcset="
-                /assets/img/preview/vertex-painter/responsive/place-holde-xs.png 300w,
-                /assets/img/preview/vertex-painter/responsive/place-holde-sm.png 480w,
-                /assets/img/preview/vertex-painter/responsive/place-holde-md.png 768w,
-                /assets/img/preview/vertex-painter/responsive/place-holde-lg.png 1024w,
-                /assets/img/preview/vertex-painter/responsive/place-holde-xl.png 1360w,
-                /assets/img/preview/vertex-painter/responsive/place-holde-2xl.png 1600w"
-                sizes="100vw"
+                src="/assets/img/preview/vertex-painter/preview.gif"
                 loading="eager"
                 width="960"
                 height="720"
@@ -37,13 +29,10 @@
             A binary file which includes all material binding information is also generated, and is read from 
             on scene load. 
         </p>
-        <p>
-            The generated folder structure looks something like this
-        </p>
-        <pre>{{this.exampleFolderStructure}}</pre>
+
         <hr>
 
-        <h3>How painting works</h3>
+        <h3 #selection>How painting works</h3>
         <p>
             The painter itself works by sampling the G-buffer (we use a deferred rendering method within our engine) 
             in editor view to get meshes' world positions and EntityIDs in order to both get active meshes with in a scene, and to 
@@ -56,27 +45,27 @@
 
         <br>
 
-        <div class="common-grid">
+        <img
+            src="/assets/img/posts/vertex-painter/vertex-selection.gif"
+            loading="eager"
+            width="960"
+            height="720"
+            alt=""
+        >
+
+        <!-- <div class="common-grid">
             <p>
                 Here's a visualization of finding the intersecting verts. 
                 Mer beskrivande text här wow va coolt!! :D
             </p>
             <img
-                src="/assets/img/website/place-holde.png"
-                srcset="
-                /assets/img/website/responsive/place-holde-xs.png 300w,
-                /assets/img/website/responsive/place-holde-sm.png 480w,
-                /assets/img/website/responsive/place-holde-md.png 768w,
-                /assets/img/website/responsive/place-holde-lg.png 1024w,
-                /assets/img/website/responsive/place-holde-xl.png 1360w,
-                /assets/img/website/responsive/place-holde-2xl.png 1600w"
-                sizes="100vw"
+            src="/assets/img/posts/vertex-painter/vertex-selection.gif"
                 loading="eager"
                 width="960"
                 height="720"
                 alt=""
             >
-        </div>
+        </div> -->
 
         <br>
         
@@ -132,8 +121,27 @@
         </div>
 
         <p>
-            As shown, tool causes vertex colors to be applied to only an affected (painted) area, even when using instanced rendering. 
-            By showcasing the vertex normals, it is also easier to showcase the mesh arrangement of the testing gym.
+            The painter also works on an per-entity selection mode, where the user is restricted to painting on meshes they have selected prior to painting (during "Object Selection Mode"). 
+            However, if no meshes are selected, it simply paints on the object the mouse is currently hovering over. 
+        </p>
+
+        <h3>Vertex Color Bindings</h3>
+        <p>
+            SKRIV MER!!!!!!!!!!!!!! 
+            When the user has clicked on 
+        </p>
+        
+        <p>
+            The generated folder structure looks something like this
+        </p>
+        <pre>{{this.exampleFolderStructure}}</pre>
+
+        <h3>Conclusion and Final thoughts</h3>
+        <p>
+            This is a way of implementing vertex painting without any vertex data creation or modification. Some perks with this is that it is really easy and intuitive to 
+            render all painted meshes using instanced draw calls. 
+            The figure blow visualizes how the vertex painter causes vertex colors to only be applied to an affected (painted) area, even when using instanced rendering. 
+            The vertex normals without any face culling are shown to more easily showcase the mesh arrangement of the scene.
         </p>
         <img
             src="/assets/img/posts/vertex-painter/affected-meshes.gif"
@@ -142,9 +150,16 @@
             height="720"
             alt=""
         >
-        <h3>Conclusion</h3>
         <p>
-            
+            Since all vertex data is stored in textures using a linear pattern, it is also possible to combine them all into a mega texture in the future! 
+            The performance hits to consider is the texture sampling done in the vertex shader and the RAM usage with slot bindings and the textures SRVs being stored in memory and the painting performance as well.  
+            So all in all, it works quite well! c:
+        </p>
+
+        <p>
+            Due to a time crunch, I never got the opportunity to implement decals that showcase selected vertices and brush radius.
+            Because of this, <a (click)="scrollToSelection()">I used some debug gizmos (DirectXTK) to draw quads rotated towards the vertex normals to get some type of visualization.</a> 
+            Though it is something that I would love to do in the future! Especially since we use a deferred rendering method  
         </p>
     </div>
     <app-back-to-top-btn></app-back-to-top-btn>

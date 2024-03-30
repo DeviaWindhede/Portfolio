@@ -23,9 +23,9 @@ import { AboutComponent } from './about/about.component';
 })
 export class DashboardComponent implements AfterViewInit {
   cardData: CardData[] = [
-    { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter" },
-    { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs" },
-    { name: "Friendship Engine", routerLink: "/friendship-engine", previewPath: "friendship-engine" }
+    { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter", isGif: true },
+    { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs", isGif: false },
+    { name: "Friendship Engine", routerLink: "/friendship-engine", previewPath: "friendship-engine", isGif: false }
   ];
 
   // temp: GameProject = 

@@ -9,36 +9,38 @@
             Any internship offers can be made on May 6th, at the earliest.
         </i>
     </div>
-    <div>
+    <div class="common-grid">
         <!-- <a href="/assets/CV.pdf">
         </a> -->
-        <div>
-            <a href="/assets/CV.pdf" aria-label="LinkedIn" class="contact-parent">
-                <svg class="contact-child contact-child--icon"><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-                <p class="contact-child">CV (PDF download)</p>
-            </a>
-        </div>
-        <div class="contact-parent">
-            <svg class="contact-child contact-child--icon"><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-            <a class="contact-child" (click)="copyToClipboard()"><p>{{phoneNumber}}</p></a>
-        </div>
-        <div>
-            <a href="mailto:devia.windhede@gmail.com" aria-label="E-Mail" class="contact-parent">
-                <svg class="contact-child contact-child--icon"><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-                <p class="contact-child">{{'devia.windhede@gmail.com'}}</p>
-            </a>
-        </div>
-        <div>
-            <a href="https://www.linkedin.com/in/devia-windhede/" aria-label="LinkedIn" class="contact-parent">
-                <svg class="contact-child contact-child--icon"><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-                <p class="contact-child">LinkedIn</p>
-            </a>
-        </div>
-        <div>
-            <a href="https://github.com/DeviaWindhede/" aria-label="GitHub" class="contact-parent">
-                <svg class="contact-child contact-child--icon"><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-                <p class="contact-child">Github</p>
-            </a>
-        </div>
+        <a href="/assets/CV.pdf" aria-label="CV">
+            <div class="grid-item">
+                <svg><use xlink:href="/assets/svg/svg-map.svg#cv"/></svg>
+                <p>CV (PDF download)</p>
+            </div>
+        </a>
+        <a href="{{'tel:' + phoneNumber}}"  aria-label="Phone Number">
+            <div class="grid-item">
+                <svg><use xlink:href="/assets/svg/svg-map.svg#phone"/></svg>
+                <p>{{phoneNumber}}</p>
+            </div>
+        </a>
+        <a href="mailto:devia.windhede@gmail.com" aria-label="E-Mail" class="contact-parent">
+            <div class="grid-item">
+                <svg><use xlink:href="/assets/svg/svg-map.svg#gmail"/></svg>
+                <p>{{'devia.windhede@gmail.com'}}</p>
+            </div>
+        </a>
+        <a href="https://www.linkedin.com/in/devia-windhede/" aria-label="LinkedIn" class="contact-parent">
+            <div class="grid-item">
+                <svg><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
+                <p>LinkedIn</p>
+            </div>
+        </a>
+        <a href="https://github.com/DeviaWindhede/" aria-label="GitHub" class="contact-parent">
+            <div class="grid-item">
+                <svg><use xlink:href="/assets/svg/svg-map.svg#git"/></svg>
+                <p>Github</p>
+            </div>
+        </a>
     </div>
 </div>

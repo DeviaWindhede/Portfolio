@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LazyImgDirective } from '../../lazy-img.directive';
 import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top-btn.component';
@@ -11,6 +11,12 @@ import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top
   styleUrl: './vertex-painter.component.scss'
 })
 export class VertexPainterComponent {
+  @ViewChild('selection') selectionElement!: ElementRef;
+
+  scrollToSelection(): void {
+    this.selectionElement.nativeElement.scrollIntoView();
+  }
+
   readonly codeContainer = [
     `void someFunc() {
 

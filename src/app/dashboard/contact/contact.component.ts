@@ -9,9 +9,4 @@ import { Component, ViewChild } from '@angular/core';
 })
 export class ContactComponent {
   phoneNumber: string = "(+46)709422659";
-
-  copyToClipboard(): void {
-    navigator.clipboard.writeText(this.phoneNumber);
-    alert("Copied to clipboard! This will be replaced with a popup in the browser");
-  }
 }

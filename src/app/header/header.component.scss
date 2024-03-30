@@ -1,5 +1,10 @@
 @import 'styles';
 
+.navbar-item {
+    font-size: 32px !important;
+    padding-bottom: 12px !important;
+}
+
 .top {
     height: $header-height;
     left: 0;

@@ -1,14 +1,28 @@
 <footer class="footer">
-    <div class="footer__copyright">
-        <p>Footer text</p>
-    </div>
-    <div class="footer__social">
-        <a href="https://www.linkedin.com/in/devia-windhede/" aria-label="LinkedIn" class="linkedin">
-            <svg><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
-        </a>
-    </div>
     <button (click)="backToTopFunction()" [ngClass]="backToTopClass" class="footer__bttop" aria-label="Back to top" title="Back to top">
         <svg><use xlink:href="/assets/svg/svg-map.svg#toparrow"/></svg>
     </button>
+    <div class="footer__social">
+        <a href="https://www.linkedin.com/in/devia-windhede/" aria-label="LinkedIn">
+            <svg><use xlink:href="/assets/svg/svg-map.svg#linkedin"/></svg>
+        </a>
+        <a href="https://github.com/DeviaWindhede/" aria-label="GitHub">
+            <svg><use xlink:href="/assets/svg/svg-map.svg#git"/></svg>
+        </a>
+        <a href="mailto:devia.windhede@gmail.com" aria-label="E-Mail">
+            <svg><use xlink:href="/assets/svg/svg-map.svg#gmail"/></svg>
+        </a>
+        <a href="tel:(+46)709422659" aria-label="Phone Number">
+            <svg><use xlink:href="/assets/svg/svg-map.svg#phone"/></svg>
+        </a>
+        
+        <a href="/assets/CV.pdf" aria-label="CV">
+            <svg><use xlink:href="/assets/svg/svg-map.svg#cv"/></svg>
+        </a>
+    </div>
+    <div class="footer__copyright">
+        <p>I made this site using Angular CLI. CSS is a modification from a public Publii theme</p>
+        <a href="https://github.com/simple-icons/simple-icons/tree/develop"><p>Icons imported from the Simple Icons library</p></a>
+    </div>
 </footer> 
   

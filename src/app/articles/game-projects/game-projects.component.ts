@@ -23,7 +23,7 @@ class GameProject
   time: number = 0;
   team: Team = { programmers: 0, artists: 0, designers: 0 };
   engine: string = "";
-  imagePath: string = "";
+  imagePaths: string[] = [""];
   contributions: string[] = [];
   link: GameProjectLink | undefined = undefined;
 }
@@ -49,14 +49,13 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde", "place-holde" ],
       contributions: [
-        "Animation blending and controller",
-        "Vertex painting",
-        "Core engine and optimizations",
-        "Post processing, toon shader and lighting implementation",
-        "PhysX library integration",
-        "Player CCC",
+        "Vertex painting, ECS, VFX Timeline implementaiton, Particle System, Animation blending",
+        "Post processing, Toon shader and Lighting implementation",
+        "Library integration (PhysX, dxtex) and Premake, Build and deployment pipeline",
+        "Rendering pipeline and integration, Rendering- and Engine optimization, Binary import/export and communication",
+        "Player CCC, Animation controllers",
       ],
       link: undefined,
     },
@@ -70,7 +69,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Deferred rendering, light rendering and post processing",
         "Skeltal mesh, animation import and implementation",
@@ -90,7 +89,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Rendering pipeline and DX11 integration",
         "Shaders and math",
@@ -109,7 +108,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "TGA's in-house engine",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Player CCC",
         "Animation system and blending"
@@ -126,7 +125,7 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "TGA's in-house engine",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Player CCC",
         "Animation system and blending",
@@ -144,7 +143,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Unity",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Map Editor",
         "Puzzle system",
@@ -165,7 +164,7 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "Unity",
-      imagePath: "place-holde",
+      imagePaths: [ "place-holde" ],
       contributions: [
         "Map Editor and procedural map speed adaptation",
         "Player controller"

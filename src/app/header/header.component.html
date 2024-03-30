@@ -4,18 +4,29 @@
     <div>
         <a class="logo" routerLink="">Devia Windhede</a>
         <nav class="navbar">
-            <button class="navbar__toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+            <button 
+                class="navbar__toggle"
+                [ngClass]="{ 'is-active' : myShouldShowMobileOverlay }"
+                aria-label="Menu"
+                aria-haspopup="false"
+                aria-expanded="false"
+                (click)="toggleMobileNavbar()"
+                #showMobileNavbarButton
+            >
             <span class="navbar__toggle-box">
                 <span class="navbar__toggle-inner">Menu</span>
             </span>
             </button>
             <ul class="navbar__menu">
-                <li><a routerLink="vertex-painter" target="_self">Specialization</a></li>
-                <li><a routerLink="tga-projects" target="_self">TGA Projects</a></li>
-                <li><a routerLink="dashboard" fragment="projects" target="_self">Projects</a></li>
-                <li><a routerLink="dashboard" fragment="contact" target="_self">Contact</a></li>
-                <li><a routerLink="dashboard" fragment="about" target="_self">About</a></li>
+                <li *ngFor="let data of links"><a routerLink="{{data.link}}" [fragment]="data.fragment" target="_self">{{data.name}}</a></li>
             </ul>
         </nav>
     </div>
 </header>
+
+<div class="navbar_mobile_sidebar__overlay" [ngClass]="{ 'is-hidden' : !myShouldShowMobileOverlay }"></div>
+<div class="navbar_mobile_sidebar" [ngClass]="{ 'is-hidden' : !myShouldShowMobileOverlay }" #mobileNavbar>
+    <ul class="navbar__menu">
+        <li class="navbar-item" *ngFor="let data of links"><a routerLink="{{data.link}}" (click)="toggleMobileNavbar()" [fragment]="data.fragment" target="_self">{{data.name}}</a></li>
+    </ul>
+</div>

@@ -21,13 +21,105 @@
         width: 2rem;
     }
 
-    &--btn {
-        margin: 1.5rem 0.375rem 0;
-        padding: 1rem;
-        font-size: 0.5rem;
-        vertical-align: middle;
-    }
 }
+
+.grid-container {
+    // display: grid;
+    // grid-template-columns: auto auto auto;
+    // background-color: #2196F3;
+    // padding: 10px;
+    
+    display: grid;
+    grid-auto-columns: 22%;
+    grid-gap: 10px;
+    justify-content: center;
+    border: solid 1px black;
+    grid-auto-flow: column;
+    width: auto;
+    height: 10.5rem;
+}
+
+.common-grid {
+    // background-color: rgba(255, 255, 255, 0.8);
+    // border: 1px solid rgba(0, 0, 0, 0.8);
+    // padding: 20px;
+    // font-size: 30px;
+    // text-align: center;
+    place-items: center;
+    text-align: center;
+    margin-top: 1rem;
+    
+    // &--btn {
+    //     margin: 1.5rem 0.375rem 0;
+    //     padding: 1rem;
+    //     font-size: 0.5rem;
+    //     vertical-align: middle;
+    // }
+}
+
+.grid-item {
+    width: auto;
+    height: auto;
+}
+
+.grid-item > svg {
+    width: inherit;
+    height: inherit;
+}
+
+.grid-item > p {
+    margin-top: 0;
+}
+
+@media all and (max-width: 37.5em) {
+    .common-grid {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .grid-item {
+        max-height: 5rem;
+    }
+    
+    .grid-item > svg {
+        max-height: 3rem;
+    }
+  }
+@media all and (min-width: 37.5em) {
+    .common-grid {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .grid-item {
+        max-height: 10rem;
+    }
+    
+    .grid-item > svg {
+        max-height: 3rem;
+    }
+  }
+  @media all and (min-width: 56.25em) {
+    .common-grid {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .grid-item {
+        max-height: 20rem;
+    }
+  }
+  @media all and (min-width: 75em) {
+    .common-grid {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .grid-item > svg {
+        max-height: 6.5rem;
+    }
+  }
 
 // .footer__social svg {
 //     fill: $white;
