@@ -1,0 +1,75 @@
+h2 {
+    margin-bottom: 1.5rem;
+}
+
+h4 {
+    margin-top: 1rem;
+}
+
+.top-element {
+    padding-right: 24px;
+}
+
+.image-container > * {
+    display: inline-block;
+}
+
+.image-descriptor > * {
+    display: block;
+}
+
+i {
+    text-align: center;
+}
+
+@media all and (max-width: 37.5em) {
+    img {
+        margin-right: 1rem;
+    }
+    
+    button {
+        margin-top: 1rem;
+    }
+
+    .image-descriptor {
+        &--first {
+            margin-top: 40px;
+        }
+    }
+}
+
+@media all and (min-width: 37.5em) {
+    img {
+        width: auto;
+        height: auto;
+    }
+
+    .common-grid {
+        grid-template-columns: 0.25fr 1fr;
+    }
+
+    button {
+        display: block;
+        margin: 1rem auto 0 auto;
+    }
+}
+
+
+@media all and (min-width: 56.25em) {
+    .top-element > * {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .top-element > i {
+        font-size: clamp(0.5rem, 0.5rem + 0.2 * (100vw - 20rem) / 72, 1.2rem);
+        text-align: center;
+    }
+
+    img {
+        width: auto;
+        height: auto;
+        max-height: 16em;
+    }
+}

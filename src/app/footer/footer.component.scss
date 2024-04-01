@@ -8,10 +8,12 @@
     text-align: center;
 
     &__copyright {
-        color:$gray-2;
-        font-size:.6789341556rem;
-        letter-spacing:1px;
-        text-transform:uppercase
+        color: $gray-2;
+        font-size: .6789341556rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        max-width: 70%;
+        margin: 0 auto;
     }
 
     &__bttop {
@@ -38,12 +40,6 @@
         margin:0;
         width:23px
     }
-
-    // &__bttop.is-visible {
-    //     visibility:visible;
-    //     opacity:1
-    // }
-
     &__social svg{
         fill:$white;
         height:2rem;
@@ -57,7 +53,12 @@
     &__social svg:hover{
         opacity:1
     }
+
+    &--offset {
+        margin-top: 1rem;
+    }
 }
+
 .footer a {
     color:$white
 }

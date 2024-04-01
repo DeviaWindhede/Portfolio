@@ -1,0 +1,13 @@
+.common-grid > p {
+    margin-top: 0;
+}
+
+a {
+    cursor: pointer;
+}
+
+@media all and (min-width: 37.5em) {
+    .common-grid > p {
+        padding: 0 1rem;
+    }
+}

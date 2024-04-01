@@ -109,7 +109,8 @@
             <p>
                 Here's an example of the tool in action, showcasing it's potential! The draw calls also stay the same, since each mesh is 
                 drawn by instance. 
-                The pixel shader used simply lerps between the bound material textures on painted vertices with vertex colors as the lerp interpolator value
+                The pixel shader used for this showcase simply lerps between the bound material textures based on the vertex colors as the lerp interpolator value, 
+                on the albedo, pixel normal, material and emissive output textures to the G-buffer
             </p>
             <img
                 src="/assets/img/posts/vertex-painter/vertex-binding.gif"
@@ -128,11 +129,29 @@
         <h3>Vertex Color Bindings</h3>
         <p>
             SKRIV MER!!!!!!!!!!!!!! 
-            When the user has clicked on 
+            When the user has clicked on a vertex within the brush radius, the SRV 
+            In editor mode, all vertex color textures are 
         </p>
-        
+        <br>
+        <div class="common-grid">
+            <img
+                src="/assets/img/posts/vertex-painter/color-snippet.png"
+                loading="eager"
+                width="960"
+                height="720"
+                alt=""
+            >
+            <p>
+                This is a 22x3 snippet from the of the top-left most UVs of a 1024x1024 vertex color texture that is currently used within one of our games. 
+                The alpha channel has been set to 255 to be able to visualize the texture structure. Since the (0, 0) color is {{'{ 20, 0, 0, 0 }'}}, it means that 
+                the current mesh has a vertex count of 20, meaning every 20+1 pixels in the texture represents another mesh instance.
+            </p>
+        </div>
+
         <p>
-            The generated folder structure looks something like this
+            Since there can exist multiple meshes within one .fbx file, each sub-mesh is given its own texture. Due to this the generated textures 
+            use the naming convension of <code>{{'meshName_{subMeshIndex}'}}</code> so it texture binding becomes as straight forward as possible. 
+            Generated vertex color textures use the R8G8B8A8_UNORM color format, and the resulting folder structure looks something like this:
         </p>
         <pre>{{this.exampleFolderStructure}}</pre>
 
