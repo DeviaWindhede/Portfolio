@@ -24,7 +24,7 @@ export class AppComponent {
     ).subscribe(event => {
       if(event instanceof NavigationEnd) {
         if (typeof window !== "undefined" && event.url.lastIndexOf('#') === -1) {
-          window.scrollTo(0, 0);
+          //window.scrollTo(0, 0);
         }
       }
     });

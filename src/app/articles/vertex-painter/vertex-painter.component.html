@@ -14,6 +14,13 @@
         </figure>
     </div>
 
+    <ol>
+        <li>skriv färgdata till en SRV</li>
+        <li>bind till SRV och visa hur vertex shadern fungerar och nämn culling problem</li>
+        <li>för pixel shader, visa att den får material bundna via binära filen</li>
+        <li>exportera SRV till en .dds fil</li>
+        <li>försök ladda in .dds filer vid start up för att spara progress</li>
+    </ol>
 
     <div class="post__entry">
         <h3>Summary</h3>
@@ -32,15 +39,63 @@
 
         <hr>
 
-        <h3 #selection>How painting works</h3>
+        <h3 #selection>Implementation process</h3>
+        When creating this implementation of a vertex painter, a certain data flow is vital 
+
+ 
         <p>
-            The painter itself works by sampling the G-buffer (we use a deferred rendering method within our engine) 
-            in editor view to get meshes' world positions and EntityIDs in order to both get active meshes with in a scene, and to 
-            translate the screen space mouse position to world position coordinates   
-            <i>(The world position could be reconstructed from the depth buffer, but it we have this RTV for convenience 
-                and debugging with minial performance losses)</i>. 
-            When world space coordinates are retrieved, the relative position in model space is then compared to all vertices within 
-            all meshes within the brush radius to find the intersecting verts. 
+            This section will describe a majority of the steps I took during the process of implementing this vertex painter. 
+
+            When making this implementation of a vertex painter it involved making large engine and rendering pipeline changes. However for this text it 
+            will be summarized into the different steps taken to make the overall process work. These steps include the following: 
+        </p>
+        <ol>
+            <li>Converting the mouse position from screen space to world space</li>
+            <li>Fetching the hovered entity's ID and its corresponding mesh</li>
+            <li>Perform a sphere intersection test on all vertices within the brush radius (previewing intersecting vertices can also be done here)</li>
+            <li>On left click, perform all painting operations on the intersecting vertices within the selected mesh's vertex color texture</li>
+            <li>A save functionality exporting the resulting textures, and importing already existing textures on start up</li>
+        </ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <h4>Mouse position related data collection</h4>
+        <p>
+            To know where the mouse is relative to the hovered entity we need its EntityID and the mouse's position in world space. 
+            Unfortunately we lacked screen-to-ray support within our engine at the moment of implementing this tool, so a few work arounds were required. 
+
+            Since our engine uses a deferred rendering pipeline, a few different RTVs are written to when rendering to the G-buffer. 
+            Two of which, the "WorldPosition" RTV and the "Effects" RTV, contains some information that could be used to accommodate this. 
+            The world position is self explanatory, but the Effects RTV is a little bit special. It is a R8G8B8A8_UNORM RTV where only the red and green components were being used, 
+            meaning the blue and alpha components could be used to slot in the EntityID. If we combine these uint8s into a singular uint16, we can potentially access all 
+            available EntityIDs within our scene's current scope. After implementing this, all data needed from the mouse position can be sampled accordingly.
+        </p>
+        <pre><code>{{gBufferExport}}</code></pre>
+        <p>
+            <i>
+                NOTE: The world position can be reconstructed from the depth buffer and a world position RTV is not needed. 
+                However we already had the world position RTV prior to implementing the vertex painter 
+                for debugging and convenience purposes, which is why was used in this implementation
+            </i>
+        </p>
+
+        <h4>Vertex intersection and preview</h4>
+        <p>
+            Once the mouse world position and EntityID is fetched, the relative position in model space is then compared to against all vertices 
+            within all meshes contained in the entity using the brush radius. These vertices are then used during brush preview and painting operations. 
+            Screen space decals were originally planned to be used during the preview, however due to time constaints, this never came to be. 
+            So preview is done using the debug renderer and drawing a quad for each intersecting vertex, rotated towards its normal. 
+            Though the debug visualization still does make the tool much easier to use!
         </p>
 
         <br>
@@ -66,6 +121,80 @@
                 alt=""
             >
         </div> -->
+
+        <h4>Vertex color texture format</h4>
+        <p>
+            One of the biggest challenges when creating this tool is deciding on a texture format. 
+            My approach to this problem was to assign colors as if they were part of a jagged uint32 array with a size equal to the texture size. 
+            Each entry would represent a vertex color and its location based on the SV_VertexID semantic. 
+            What's tricky about this however, is knowing where the intial uv location each instance should derive from.
+        </p>
+        <p>
+            At first I considered linking the initial index to the SV_InstanceID semantic, but discarded that thought since culling would have a severe impact. 
+            What I ended up using was giving each entity its own unique index thats incrementally assigned during painting, meaning the first painted entity 
+            of a mesh type would be given the value 0 and following entities of the same mesh type would have incremented values of 1, 2, 3 and so on. 
+            These indices would then be saved into a binary file that is loaded every scene change. The indices are related to the EntityID, meaning that if they EntityID would change 
+            due to ID recycling or scene changes post painting, they would become missmatched. However since the painting is only done on static geometry, and all levels during 
+            our development cycles are created in segments and are also never vertex painted until finalized, it never becomes a problem.
+        </p>
+        <pre>
+            <code>{{colorSaving}}</code>
+        </pre>
+        <p>
+            You may notice the +1 when calculating the step offset. Since each step is dependant on the vertex count, I avoided the use of a buffer to send the vertex 
+            count and instead reserved the (0, 0) coordinate to contain the value. This decision was made early on to aid in debugging and to reduce overhead. Here are some 
+            examples on the resulting layout: 
+        </p>
+
+        <div class="common-grid">
+            <img
+                src="/assets/img/posts/vertex-painter/color-snippet.png"
+                loading="eager"
+                width="960"
+                height="720"
+                alt=""
+                class="child-padding"
+            >
+            <img
+                src="/assets/img/posts/vertex-painter/vertex-wrapping.png"
+                loading="eager"
+                width="960"
+                height="720"
+                alt=""
+                class="child-padding"
+            >
+        </div>
+        <p>
+            The first image (left-to-right on larger resolutions) is a 22x3 snippet from the of the top-left most UVs of a 1024x1024 vertex color texture that is currently used within one of our games. 
+            The alpha channel has been set to 255 to be able to visualize the texture structure. Since the (0, 0) color is {{'{ 20, 0, 0, 0 }'}}, it means that 
+            the current mesh has a vertex count of 20, meaning every 20 * vertexPaintedIndex + 1 pixels in the texture represents another mesh instance.
+        </p>
+
+        <h4>Vertex color mapping</h4>
+        <p>
+            Once the format is established, all that is left to allow painting is to save the color information to an SRV and have it bound as a vertex shader resource. 
+            To save the color information, I created a staging texture that copies.
+
+            
+        </p>
+        <script src="https://gist.github.com/DeviaWindhede/42813b1fc05aec18439c5d2955e380dd.js"></script>
+        <p>
+            When saving to 
+        </p>
+        <pre>
+            <code>{{textureMapping}}</code>
+        </pre>
+
+        <br>
+
+        <h4>Vertex texture binding</h4>
+
+        <p>
+            Since there can exist multiple meshes within one .fbx file, each sub-mesh is given its own texture. Due to this the generated textures 
+            use the naming convension of <code>{{'meshName_{subMeshIndex}'}}</code> so it texture binding becomes as straight forward as possible. 
+            Generated vertex color textures use the R8G8B8A8_UNORM color format, and the resulting folder structure looks something like this:
+        </p>
+        <pre>{{this.exampleFolderStructure}}</pre>
 
         <br>
         
@@ -125,35 +254,6 @@
             The painter also works on an per-entity selection mode, where the user is restricted to painting on meshes they have selected prior to painting (during "Object Selection Mode"). 
             However, if no meshes are selected, it simply paints on the object the mouse is currently hovering over. 
         </p>
-
-        <h3>Vertex Color Bindings</h3>
-        <p>
-            SKRIV MER!!!!!!!!!!!!!! 
-            When the user has clicked on a vertex within the brush radius, the SRV 
-            In editor mode, all vertex color textures are 
-        </p>
-        <br>
-        <div class="common-grid">
-            <img
-                src="/assets/img/posts/vertex-painter/color-snippet.png"
-                loading="eager"
-                width="960"
-                height="720"
-                alt=""
-            >
-            <p>
-                This is a 22x3 snippet from the of the top-left most UVs of a 1024x1024 vertex color texture that is currently used within one of our games. 
-                The alpha channel has been set to 255 to be able to visualize the texture structure. Since the (0, 0) color is {{'{ 20, 0, 0, 0 }'}}, it means that 
-                the current mesh has a vertex count of 20, meaning every 20+1 pixels in the texture represents another mesh instance.
-            </p>
-        </div>
-
-        <p>
-            Since there can exist multiple meshes within one .fbx file, each sub-mesh is given its own texture. Due to this the generated textures 
-            use the naming convension of <code>{{'meshName_{subMeshIndex}'}}</code> so it texture binding becomes as straight forward as possible. 
-            Generated vertex color textures use the R8G8B8A8_UNORM color format, and the resulting folder structure looks something like this:
-        </p>
-        <pre>{{this.exampleFolderStructure}}</pre>
 
         <h3>Conclusion and Final thoughts</h3>
         <p>
