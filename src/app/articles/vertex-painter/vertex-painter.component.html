@@ -80,7 +80,7 @@
             meaning the blue and alpha components could be used to slot in the EntityID. If we combine these uint8s into a singular uint16, we can potentially access all 
             available EntityIDs within our scene's current scope. After implementing this, all data needed from the mouse position can be sampled accordingly.
         </p>
-        <pre><code>{{gBufferExport}}</code></pre>
+        <ngx-gist [gistId]="'73d0c768cea1e65593696c1c7ee357fe'"></ngx-gist>
         <p>
             <i>
                 NOTE: The world position can be reconstructed from the depth buffer and a world position RTV is not needed. 
@@ -137,9 +137,7 @@
             due to ID recycling or scene changes post painting, they would become missmatched. However since the painting is only done on static geometry, and all levels during 
             our development cycles are created in segments and are also never vertex painted until finalized, it never becomes a problem.
         </p>
-        <pre>
-            <code>{{colorSaving}}</code>
-        </pre>
+        <ngx-gist [gistId]="'cc0015879ec9b360b2d52a3dba56fa10'"></ngx-gist>
         <p>
             You may notice the +1 when calculating the step offset. Since each step is dependant on the vertex count, I avoided the use of a buffer to send the vertex 
             count and instead reserved the (0, 0) coordinate to contain the value. This decision was made early on to aid in debugging and to reduce overhead. Here are some 
@@ -177,13 +175,10 @@
 
             
         </p>
-        <script src="https://gist.github.com/DeviaWindhede/42813b1fc05aec18439c5d2955e380dd.js"></script>
         <p>
             When saving to 
         </p>
-        <pre>
-            <code>{{textureMapping}}</code>
-        </pre>
+        <ngx-gist [gistId]="'09de3d0826021d041c1d1d8359cf3193'"></ngx-gist>
 
         <br>
 
