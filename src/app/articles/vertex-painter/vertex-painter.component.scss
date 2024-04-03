@@ -2,9 +2,12 @@ a {
     cursor: pointer;
 }
 
-.grid-descriptor
-{
+.grid-descriptor {
     margin: auto 0;
+}
+
+.code-block {
+    margin-top: 1rem;
 }
 
 @media all and (max-width: 37.5em) {
