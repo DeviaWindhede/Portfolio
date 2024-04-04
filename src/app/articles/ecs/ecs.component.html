@@ -1,30 +1,3 @@
-<!-- <!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vertex Painter supporting instanced drawing using texture sampling in vertex shader - Devia Windhede</title><meta name="description" content="Abstract Content void someFunc() { } Result"><meta name="generator" content="Publii Open-Source CMS for Static Site">
-
-
-
-<link rel="stylesheet" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/media/plugins/syntaxHighlighter/prism-black.css">
-<link rel="canonical" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html">
-<link rel="alternate" type="application/atom+xml" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/feed.xml">
-<link rel="alternate" type="application/json" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/feed.json">
-
-<meta property="og:title" content="Vertex Painter supporting instanced drawing using texture sampling in vertex shader">
-<meta property="og:image" content="file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/media/posts/4/place-holde.png">
-<meta property="og:image:width" content="960"><meta property="og:image:height" content="720"><meta property="og:site_name" content="Devia Windhede">
-<meta property="og:description" content="Abstract Content void someFunc() { } Result">
-<meta property="og:url" content="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html">
-<meta property="og:type" content="article"><link rel="stylesheet" href="file:///C:\Users\Devia\Documents\Publii\sites\devia-windhede\preview/assets/css/style.css?v=1faeab3de3757dfd2876bbb1f067cd12">
-<script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"file:///C:\\Users\\Devia\\Documents\\Publii\\sites\\devia-windhede\\preview/vertex-painter-supporting-instanced-drawing-using-texture-sampling-in-vertex-shader.html"},"headline":"Vertex Painter supporting instanced drawing using texture sampling in vertex shader","datePublished":"2024-02-27T12:46","dateModified":"2024-02-27T13:03","image":{"@type":"ImageObject","url":"file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/media/posts/4/place-holde.png","height":720,"width":960},"description":"Abstract Content void someFunc() { } Result","author":{"@type":"Person","name":"Devia Windhede","url":"file:///C:/Users/Devia/Documents/Publii/sites/devia-windhede/preview/authors/devia/"},"publisher":{"@type":"Organization","name":"Devia Windhede"}}
-</script><noscript>
-    
-    <style>
-    img[loading] {
-        opacity: 1;
-    }
-    </style>
-    </noscript>
-</head> -->
-
-
 <article class="post wrapper">
     <div class="hero hero--full">
         <header>
@@ -95,19 +68,25 @@
         <p>
             EntityManager text
         </p>
-        <pre><code>{{this.entityManager}}</code></pre>
+        <div class="code-block">
+            <ngx-gist [gistId]="'5aaa69ef630619b2d96e17bf04a01c38'"></ngx-gist>
+        </div>
 
         <h4>ComponentManager</h4>
         <p>
             ComponentManager text
         </p>
-        <pre><code>{{this.componentManager}}</code></pre>
+        <div class="code-block">
+            <ngx-gist [gistId]="'f5809add39018ab7cf141e1726d13837'"></ngx-gist>
+        </div>
 
         <h4>SystemManager</h4>
         <p>
             SystemManager text
         </p>
-        <pre><code>{{this.systemManager}}</code></pre>
+        <div class="code-block">
+            <ngx-gist [gistId]="'a496beaa541c9fe51610adc56595d76e'"></ngx-gist>
+        </div>
 
         <h4>Performance issues :c</h4>
         <p>
@@ -123,29 +102,13 @@
             the index directly from the templated variable without knowning the type. Therefore bypassing the need for 
             a look up table for Component->ComponentContainer
         </p>
-        <pre><code>{{this.codeContainer[0]}}</code></pre>
-        <pre><code>{{this.codeContainer[1]}}</code></pre>
+        <div class="code-block">
+            <ngx-gist [gistId]="'3c83a84fb04b4757cf4b986fa6f3576b'"></ngx-gist>
+        </div>
         <p>
             You may notice at all container poiner locations can also be block allocated, which 
             it is not at the moment. So a potential improvement for this would be to pool allocate the containers.
         </p>
-
-        <!-- <li>
-            Pros
-            <ul>pro</ul>
-            <ul>pro</ul>
-            <ul>pro</ul>
-            <ul>pro</ul>
-        </li>
-        <br>
-        <li>
-            Cons
-            <ul>con</ul>
-            <ul>con</ul>
-            <ul>con</ul>
-            <ul>con</ul>
-        </li> -->
-
         <h3>Conclusion</h3>
         <p>
             This is the ECS that is being used in the custom game engine we made at The Game Assembly, 

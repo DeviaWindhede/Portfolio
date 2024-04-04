@@ -20,45 +20,51 @@
             A Vertex Painter that stores vertex colors within a texture instead of 
             the model. Each texel represents a vertex and its corresponding color. 
             One texture is generated for each mesh that has been painted in a scene (including sub-meshes). 
-            Texture file names are named identically to the mesh name, however a <code>_x</code> post-fix that represents the sub mesh index is also added
+            Texture file names are identical to the mesh name, however a <code>_x</code> post-fix that represents the sub mesh index is also added
         </p>
         <p>
-            Two binary files, one of which includes all material binding information, and the other paint instance ids, are also generated. These are read from on scene load and 
-            determain material binding and UV coordinates in the vertex shader
+            Two binary files are also generated, one of which includes all material binding information, and the other paint instance ids. These files are read from on scene load and 
+            determine material binding and UV coordinates within the vertex shader
         </p>
 
         <hr>
 
-        <h3>Implementation process</h3>
+        <h3>Premise</h3>
         <p>
-            This text describes some of the intricacies involed in developing a vertex painting tool that stores all vertex color information in textures, as 
-            opposed to storing it directly within a mesh instance.
+            When developing one of our game projects at The Game Assembly, one of the artists on the team asked if it was possible to implement a vertex painter within the engine 
+            as it would allow them to more easily make tweaks to a levels appearance. I thought it sounded like a great idea so I told them yes! As I started planning out the details, 
+            I realized that if I put a unique spin on the implementation I could develop this during my specialization. Which is what I did! The goal was making a functional tool where the 
+            painted meshes would not affect the draw call count, and therefore still allow instanced rendering. One of my ideas to solve this was to store all the vertex color 
+            information within textures instead of within the mesh instance vertex themselves. This would also allow me to focus more on the engine and graphical implementation, which is 
+            the area of development I would like to specialize in!
         </p>
         <p>
-            Implementing this tool involved making large engine and rendering pipeline changes, however since most of it is not essential to understanding 
-            how this tool was made, this section's content will mostly only mention the steps taken to make the overall process work
+            This text will go through some of the intricacies involed in developing a vertex painting tool that stores all vertex color information in textures, as 
+            opposed to storing it directly within a mesh instance. Since a lot of engine and rendering pipeline changes had to be made to make this implementation work smoothly, 
+            most of it won't be mentioned in this text and it will mostly focus on the steps taken to texture mapping, binding and how it is read within the vertex shader.
         </p>
         <p>
             Topics at hand:
         </p>
         <ol>
             <li>Converting the mouse position from screen space to world space</li>
-            <li>Fetching the hovered entity's ID and its corresponding mesh</li>
-            <li>Perform a sphere intersection test on all vertices within the brush radius (previewing intersecting vertices can also be done here)</li>
+            <li>Fetching the mouse hovered entity's ID and its corresponding mesh</li>
+            <li>Perform a sphere intersection test on all vertices within the brush radius (previewing intersecting vertices is also be done here)</li>
             <li>Vertex color texture format, mapping and binding</li>
             <li>Brief brush tool customization</li>
         </ol>
 
+        <h3>Implementation</h3>
         <h4>Mouse position related data collection</h4>
         <p>
-            To know where the mouse is relative to the hovered entity we need its EntityID and the mouse's position in world space. 
-            Unfortunately we lacked screen-to-ray support within our engine at the moment of implementing this tool, so a few work arounds were required. 
+            To know where the mouse is relative to the hovered entity we need both the entity's ID and the mouse's position in world space. 
+            Unfortunately we lacked screen-to-ray collection testing support within our engine at the moment of implementing this tool, so a few work arounds were required. 
 
-            Since our engine uses a deferred rendering pipeline, a few different RTVs are written to when rendering to the G-buffer. 
-            Two of which, the "WorldPosition" RTV and the "Effects" RTV, contains some information that could be used to accommodate this. 
-            The world position is self explanatory, but the Effects RTV is a little bit special. It is a R8G8B8A8_UNORM RTV where only the red and green components were being used, 
-            meaning the blue and alpha components could be used to slot in the EntityID. If we combine these uint8s into a singular uint16, we can potentially access all 
-            available EntityIDs within our scene's current scope. After implementing this, all data needed from the mouse position can be sampled accordingly
+            Our engine uses a deferred rendering pipeline, and so a few different RTVs are written to when rendering to the G-buffer. 
+            Two of these RTVs, the "WorldPosition" and the "Effects" RTV, contains some information that could be used to accommodate this. 
+            The world position is self explanatory, however the Effects RTV is a little bit special. It was a R8G8_UNORM RTV, meaning there was room for blue and alpha components
+            that could be used to fit in the EntityID. If we combine these two uint8s into a singular uint16, we can potentially access all available EntityIDs 
+            within our scene's current scope. When this was implemented, all data needed from the mouse's screen space position could be sampled accordingly
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'73d0c768cea1e65593696c1c7ee357fe'"></ngx-gist>
@@ -73,11 +79,15 @@
 
         <h4>Vertex intersection and preview</h4>
         <p>
-            Once the mouse world position and EntityID is fetched, the relative position in model space is then compared to against all vertices 
-            within all meshes contained in the entity using the brush radius. These vertices are then used during brush preview and painting operations. 
-            Screen space decals were originally planned to be used during the preview, however due to time constaints, this never came to be. 
-            So preview is done using the debug renderer and drawing a quad for each intersecting vertex, rotated towards its normal. 
-            Though the debug visualization still does make the tool much easier to use!
+            Once the mouse's world position and hovered entity's ID is fetched, the relative mouse position in model space is then compared to against all vertices 
+            within all meshes contained in the entity using the brush radius. This vertex container is updated every time the mouse is moved, and all intersecting vertices 
+            are used during brush preview and all future painting operations.
+        </p>
+        <p>
+            As for previewing all intersecting vertices, screen space decals were originally planned to be used. However due to time constaints, this never came to be. 
+            Preview is done using the debug renderer, since it is a render that has a disabled depth stencil state. 
+            One quad is then drawn for each intersecting vertex, rotated towards the vertex normal. 
+            Though decals were never implemented, this visualization method does make the tool much easier to use!
         </p>
 
         <br #vertexSelection>
@@ -92,31 +102,31 @@
 
         <h4>Vertex color texture format</h4>
         <p>
-            One of the biggest challenges when creating this tool is deciding on a texture format. 
+            One of the greatest challenges when creating this tool is deciding on a texture format. 
             My approach to this problem was to assign colors as if they were part of a jagged uint32 array with a size equal to the texture size. 
-            Each entry would represent a vertex color and its location based on the SV_VertexID semantic. 
-            What's tricky about this however, is knowing where the intial uv location each instance should derive from
+            Each entry would represent a vertex color and its array location would be based on the SV_VertexID semantic. 
+            What's tricky about this however, is knowing where the intial UV location each instance should derive from
         </p>
         <p>
             At first I considered linking the initial index to the SV_InstanceID semantic, but discarded that thought since culling would have a severe impact. 
-            What I ended up using was giving each entity its own unique index thats incrementally assigned during painting, meaning the first painted entity 
-            of a mesh type would be given the value 0 and following entities of the same mesh type would have incremented values of 1, 2, 3 and so on. 
-            These indices would then be saved into a binary file that is loaded every scene change, which also means the save data is unique per scene
+            What I ended up using was giving each entity its own unique index that's incrementally assigned during the painting process. 
+            For example, the first painted entity of a mesh type would be given the value of 0 and following entities of the same mesh type would have incremented values of 1, 2, 3 and so on. 
+            These indices would then be saved into a binary file that unique per scene, and is loaded once on scene load.
         </p>
         <p #vertexTextureFormat>
-            Since the aforementioned indices are related to the EntityID does mean that if the EntityID would change due to ID recycling or 
-            scene hierarchy updates after the scene has been painted, they would become missmatched. 
-            However since the painting is only done on static geometry, and during my teams development cycle, all levels are created in segments and 
-            are only vertex painted after they have been finalized, it never becomes a problem. Though this is something that should be considered should this 
-            be implemented in another environment
+            Since the aforementioned indices are related to the EntityID, it does mean that if the EntityID would change due to ID recycling or 
+            any scene hierarchy updates that could affect their IDs, the indices would become missmatched. 
+            However since vertex painting is done exclusively on static geometry, and only after a scene has been finalized, it never becomes a problem. 
+            Though it is something that should be considered should this be implemented in another environment. A possible solution is to track whenever a 
+            painted entity is modified (by emitting an event for instance), and rewrite the binary file on scene save to correct these missmatches. 
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'cc0015879ec9b360b2d52a3dba56fa10'"></ngx-gist>
         </div>
         <p>
-            You may notice the +1 when calculating the step offset. Since each step is dependant on the vertex count, I avoided the use of a buffer to send the vertex 
-            count and instead reserved the (0, 0) coordinate to contain the value. This decision was made early on to aid in debugging and to reduce overhead. Here are some 
-            examples on the resulting layout: 
+            You may notice the +1 when calculating the step offset. Since each step is dependant on the vertex count, I avoided the use of a constant buffer to store the value 
+            and instead reserved the (0, 0) coordinate for it. This decision was made early on to aid in debugging and to reduce overhead. 
+            Here are some examples on the resulting layout: 
         </p>
 
         <div class="common-grid">
@@ -149,25 +159,26 @@
         <h4>Vertex color mapping</h4>
         <p>
             Once the format is established, all that is left to allow painting is to save the color information to an SRV and have it bound as a vertex shader resource. 
-            To do this, I created created the vertex texture as with the dynamic usage- and write cpu flags enabled during editor mode. 
-            Additionally, a staging texture used for copying data during write-discard mapping operation to the target SRV
+            To do this, I created the vertex texture with the dynamic usage- and cpu write flags enabled during editor mode. 
+            Additionally, a staging texture was used for copying data during a write-discard mapping operation to the target SRV
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'09de3d0826021d041c1d1d8359cf3193'"></ngx-gist>
         </div>
         <p>
-            When saving these textures to distinct .dds files, the texture name is identical to the source mesh. Additionally since a model can contain 
-            multiple meshes, each sub-mesh is also given its own texture. Due to this a "_x" post-fix is added to the file name, where x is replaced with the sub mesh index. 
+            When saving these textures to distinct .dds files, their files names are identical to the source meshes'. Additionally since a model can contain 
+            multiple meshes, this means each sub-mesh is also given its own texture. Due to this a "_x" post-fix is added to the file name, where x is replaced with the sub mesh index. 
             Generated vertex color textures use the R8G8B8A8_UNORM color format, since higher detail levels are rarely needed. It is possible to combine 
-            these textures into a larger mega-texture, and although that is not the case when writing this article, it is something that will be implemented in the future!
+            these textures into a larger texture atlas, and although this is not implemented as of writing this article, it is something that will be implemented in the future! 
+            The reserved (0,0) slot could also be used for vertex colors instead, since a constant buffer would most likely be needed
         </p>
 
         <h4>Vertex texture binding</h4>
         <p>
             The vertex color output is generated by simply sampling the texture that was generated by the Vertex Painter. 
-            Since we are sampling from the texture <a (click)="scrollToElement(vertexTextureFormat)">we just described the format to</a>, 
-            the uv locations for sampling is replicated on the vertex shader. However since the need to get the vertex count, it is also sampled 
-            from the (0,0) location that was previously reserved
+            Since we are sampling from the texture <a (click)="scrollToElement(vertexTextureFormat)">we already know the format to</a>, 
+            the UV locations are calculated the same way as when they were written to the texture. However since the need to get the vertex count, it is also sampled 
+            from the reserved (0,0) location
         </p>
 
         <div class="code-block">
@@ -175,15 +186,15 @@
         </div>
 
         <p>
-            All vertex color textures are assigned the same size (currently 1024x1024px). However a potential optimization would be to dynamically alter the texture size depending 
+            All vertex color textures are assigned the same dimensions (currently 1024x1024px). However a potential optimization would be to dynamically alter the texture size depending 
             on the amount of meshes that has been painted on. There would also be no need to change any vertex shader or painting logic since they base their indexing off of the 
-            texture size at runtime. Though to save time when implementing this tool, this was never implemented
+            texture dimensions at runtime. Though to save time when implementing this tool, this was never implemented
         </p>
 
         <h4>Material binding</h4>
         <p>
-            With the painting pipeline complete, all that is missing is associating materials with each vertex color channel when painting. 
-            This material information is stored within a binary file that is generated or updated each time the user saves their current changes in the vertex painting tool. 
+            With the pipeline complete, all that is missing is associating materials with each vertex color channel during the painting process. 
+            This material information is stored within a binary file that is generated or updated each time the user saves their current changes in the tool. 
             The data contained in these files are: 
         </p>
         <ul>
@@ -193,16 +204,16 @@
         </ul>
 
         <p>
-            When loading from these files, the material names are bound to each affected mesh prior to rendering if available. 
-            The two different binary files could also be combined into a singular file if needed. 
+            When files are being read from, the material names are bound to each affected mesh prior to rendering if available. 
+            The two different binary files (material binding and vertex painted indices) could also be combined into a singular file if needed. 
             With the pipeline complete, the generated file structure looks something like this: 
         </p>
         <pre>{{this.exampleFolderStructure}}</pre>
 
         <h4>Brush customization</h4>
         <p>
-            To enable further customization, some brush hardness and color strength options are also added. 
-            Hardness refers to the "feather" amount when painting, and the color strength the base line opacity of the color that is being painted. 
+            To enable further customization, some brush hardness and color strength options were also added. 
+            Hardness refers to a feathering effect, and color strength the base line opacity of the selected color that whilst painting. 
             The implementation is quite simple and is just a distance check with some multipliers
         </p>
         <div class="code-block">
@@ -223,20 +234,21 @@
         <h3>Results and Final thoughts</h3>
         <p>
             A vertex painting tool where all vertex colors are sampled from a texture has successfully been made and the initial goal has been reached! 
-            Since they are sampled, the rendering method remain the same and therefore the draw calls also remain the same. This way of implementing a vertex painter 
-            is quite handy when it comes to debugging since all you have to do is to open a texture file and look at it. Additionally, the performance gains from not mapping too much data 
-            to the GPU are also quite nice! Though by having so many different textures, it does induce a penalty, especially to the RAM but it is not too noticable from my testing. 
-            Though it would be nice to combine them into a mega texture, especially since the data is stored in a linear pattern
+            Since they are sampled, the mesh data being sent to the GPU remain the same and therefore the draw calls also remain the same. 
+            This way of implementing a vertex painter is quite handy when it comes to debugging since all you have to do is to open a texture file and look at it. 
+            Additionally, the performance gains from not mapping too much data to the GPU are also quite nice! 
+            Though by having so many different textures, it does induce a penalty, especially to the RAM. 
+            This will be somewhat reduced in the future, since they will be combined into a texture atlast
         </p>
         <p>
-            It is also quite fragile when it comes to scene hierarchy so it can realistically only be used after set dressing is finalized without wasting too much time correcting its issues. 
-            This could however be circumvented by not relying on the EntityIDs, so there are definitely room for improvement! All-in-all I am quite happy with the results and I think 
-            my take on this problem is quite interesting, at least for some theory crafting! c:
+            It is currently quite fragile when it comes to scene hierarchy, which means it can realistically only be used after set dressing is 
+            finalized without wasting too much time correcting its issues, so there are definitely room for improvement. 
+            All-in-all I am quite happy with the results! I think this take on the instantiation problem is quite unique and it was really fun to implement! c:
         </p>
         <p>
-            Here's an example of the tool in action, showcasing it's usage (I'm really just messing around)! The pixel shader used for this showcase 
-            simply lerps between the bound material textures based on the vertex colors as the lerp interpolator value. 
-            These values are then used on the albedo, pixel normal, material and effects output textures to the G-buffer
+            Here's an example of the tool in action, showcasing it's usage (it's really just me messing about). 
+            The pixel shader used for this showcase simply lerps between the bound material textures, using the vertex colors as the lerp interpolator value. 
+            These values are then used on the albedo, pixel normal, material and effect G-buffer output textures 
         </p>
         <img
             src="/assets/img/posts/vertex-painter/vertex-binding.gif"
@@ -247,14 +259,15 @@
         >
 
         <p>
-            The painter currently also works on an per-entity selection mode, where the user is restricted to painting on meshes they have selected prior to painting (during "Object Selection Mode"). 
-            However, if no meshes are selected, it simply paints on the object the mouse is currently hovering over. This is something that can cause issues by accidentally painting on some 
-            meshes unintentionally
+            The painter currently works on an per-entity selection mode, where the user is restricted to painting on meshes they have selected prior to painting (during "Object Selection Mode"). 
+            However, if no meshes are selected, it simply paints on the object the mouse is currently hovering over. This is something that could cause issues by accidentally painting on some 
+            meshes unintentionally. Though it can be circumvented by forcing the user to select entities prior to painting.
         </p>
 
         <p>
-            The figure below also visualizes how the vertex painter causes vertex colors to only be applied to an affected (painted) area, even when using instanced rendering. 
-            The vertex normals without any face culling are shown to more easily showcase the mesh arrangement of the scene. These images were gathered using RenderDoc
+            The figure below visualizes how the vertex painter causes vertex colors to only be applied to an affected (painted) area, even when using instanced rendering. 
+            The vertex normals without any face culling are shown to more easily showcase the mesh arrangement of the scene. The shown meshes are missing the "roof" because that 
+            part of the model is another sub-mesh. These images were gathered using RenderDoc
         </p>
         <img
             src="/assets/img/posts/vertex-painter/affected-meshes.gif"
