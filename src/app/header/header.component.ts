@@ -30,8 +30,8 @@ export class HeaderComponent {
 
   links: HeaderLink[] = [
     { link: "vertex-painter", name: "Specialization" },
-    { link: "tga-projects", name: "TGA Projects" },
-    { link: "dashboard", name: "Projects", fragment: "projects" },
+    { link: "group-projects", name: "Group Projects" },
+    { link: "dashboard", name: "Personal Projects", fragment: "projects" },
     { link: "dashboard", name: "Contact", fragment: "contact" },
     { link: "dashboard", name: "About", fragment: "about" },
   ];

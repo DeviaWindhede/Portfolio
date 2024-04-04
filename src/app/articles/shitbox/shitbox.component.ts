@@ -5,11 +5,11 @@ import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top
 import { NgxGistModule } from '@ekkolon/ngx-gist';
 
 @Component({
-  selector: 'app-ecs',
+  selector: 'app-shitbox',
   standalone: true,
   imports: [ RouterModule, LazyImgDirective, BackToTopBtnComponent, NgxGistModule ],
-  templateUrl: './ecs.component.html',
-  styleUrl: './ecs.component.scss'
+  templateUrl: './shitbox.component.html',
+  styleUrl: './shitbox.component.scss'
 })
-export class EcsComponent {
+export class ShitboxComponent {
 }

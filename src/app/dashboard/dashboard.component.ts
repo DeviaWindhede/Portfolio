@@ -25,45 +25,10 @@ export class DashboardComponent implements AfterViewInit {
   cardData: CardData[] = [
     { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter", isGif: true },
     { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs", isGif: false },
-    { name: "Friendship Engine", routerLink: "/friendship-engine", previewPath: "friendship-engine", isGif: false }
+    { name: "Friendship Engine", routerLink: "/friendship-engine", previewPath: "friendship-engine", isGif: false },
+    // { name: "Networked Kirby Airride Clone in Unity", routerLink: "/networked-kirby-airride", previewPath: "kirby-clone", isGif: false },
+    { name: "sHitbox", routerLink: "/shitbox", previewPath: "shitbox", isGif: false }
   ];
-
-  // temp: GameProject = 
-  // { 
-  //   name: "Test Name",
-  //   genre: "Genre Name",
-  //   time: 160,
-  //   team: {
-  //     programmers: 1,
-  //     artists: 2,
-  //     designers: 3
-  //   },
-  //   engine: "Engine Name",
-  //   imagePath: "place-holde",
-  //   contributions: [
-  //     "Point 1",
-  //     "Point 2",
-  //     "Point 3"
-  //   ]
-  // };
-
-
-
-    // On the Goose!
-    // SPITE: Mask of Brigitte
-    // B-DAY 1947
-    // Aeon's Adventure: Distorted Time
-    // Dissonance
-    // Slothomancer
-    // Squid Heist
-
-
-
-
-
-  // heroes: Hero[] = [];
-
-  // constructor(private heroService: HeroService) { }
 
   constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
   }
