@@ -24,7 +24,7 @@ import { AboutComponent } from './about/about.component';
 export class DashboardComponent implements AfterViewInit {
   cardData: CardData[] = [
     { name: "Vertex Painter with instanced rendering support using texture stored vertex colors", routerLink: "/vertex-painter", previewPath: "vertex-painter", isGif: true },
-    { name: "Signature ECS with optimizations using CRTP", routerLink: "/ecs", previewPath: "ecs", isGif: false },
+    { name: "Signature ECS using a static polymorphism optimization method", routerLink: "/ecs", previewPath: "ecs", isGif: false },
     { name: "Friendship Engine", routerLink: "/friendship-engine", previewPath: "friendship-engine", isGif: false },
     // { name: "Networked Kirby Airride Clone in Unity", routerLink: "/networked-kirby-airride", previewPath: "kirby-clone", isGif: false },
     { name: "sHitbox", routerLink: "/shitbox", previewPath: "shitbox", isGif: false }

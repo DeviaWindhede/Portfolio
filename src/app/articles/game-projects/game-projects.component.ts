@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LazyImgDirective } from '../../lazy-img.directive';
 import { CommonModule } from '@angular/common';
 import { BackToTopBtnComponent } from '../../utility/back-to-top-btn/back-to-top-btn.component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 class Team
 {
@@ -25,7 +26,9 @@ class GameProject
   engine: string = "";
   imagePaths: string[] = [""];
   contributions: string[] = [];
-  link: GameProjectLink | undefined = undefined;
+  link?: GameProjectLink | undefined;
+  youtube?: string | undefined;
+  safeYoutubeUrl?: SafeResourceUrl | undefined;
 }
 
 @Component({
@@ -49,15 +52,14 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde", "place-holde" ],
+      imagePaths: [ "place-holde.png", "place-holde.png" ],
       contributions: [
         "Vertex painting, ECS, VFX Timeline implementaiton, Particle System, Animation blending",
         "Post processing, Toon shader and Lighting implementation",
-        "Library integration (PhysX, dxtex) and Premake, Build and deployment pipeline",
+        "Library integration (PhysX, DirectXTex) and Premake, Build and deployment pipeline",
         "Rendering pipeline and integration, Rendering- and Engine optimization, Binary import/export and communication",
         "Player CCC, Animation controllers",
       ],
-      link: undefined,
     },
     { 
       name: "SPITE: Mask of Brigitte",
@@ -69,7 +71,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "place-holde.png" ],
       contributions: [
         "Deferred rendering, light rendering and post processing",
         "Skeltal mesh, animation import and implementation",
@@ -77,7 +79,6 @@ export class GameProjectsComponent {
         "Entity Component System",
         "Core engine",
       ],
-      link: undefined,
     },
     { 
       name: "B-DAY 1947",
@@ -89,14 +90,14 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "place-holde.png" ],
       contributions: [
         "Rendering pipeline and DX11 integration",
         "Shaders and math",
         "Core engine system implementation and structure",
         "Library implementation"
       ],
-      link: undefined,
+      youtube: 'https://www.youtube.com/embed/mi7AsAxNiDo?si=g63NN7tU7jKqQVrs'
     },
     { 
       name: "Aeon's Adventure: Distorted Time",
@@ -108,12 +109,12 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "TGA's in-house engine",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "place-holde.png" ],
       contributions: [
         "Player CCC",
         "Animation system and blending"
       ],
-      link: undefined,
+      youtube: 'https://www.youtube.com/embed/TWCVsLfUN20?si=ho4scND5aFQXcoJm'
     },
     { 
       name: "Dissonance",
@@ -125,13 +126,13 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "TGA's in-house engine",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "place-holde.png" ],
       contributions: [
         "Player CCC",
         "Animation system and blending",
         "Level import"
       ],
-      link: undefined,
+      youtube: 'https://www.youtube.com/embed/X1byxQDmIbg?si=x7oKE8gDMDFwTbMq'
     },
     { 
       name: "Slothomancer",
@@ -143,7 +144,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Unity",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "slothomancer-gameplay.jpg", "slothomancer-gameplay1.jpg" ],
       contributions: [
         "Map Editor",
         "Puzzle system",
@@ -152,7 +153,8 @@ export class GameProjectsComponent {
       link: {
         preview: "Google Play",
         destination: "https://play.google.com/store/apps/details?id=frogBig.Slothomancer_v1&hl=en&gl=US"
-      }
+      },
+      youtube: 'https://www.youtube.com/embed/Mx0AzJmt5eg?si=DJpiFJYjXGNP2Wwx'
     },
     { 
       name: "Squid Heist",
@@ -164,13 +166,21 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "Unity",
-      imagePaths: [ "place-holde" ],
+      imagePaths: [ "otto.png", "otto2.png" ],
       contributions: [
         "Map Editor and procedural map speed adaptation",
         "Player controller"
       ],
-      link: undefined,
+      youtube: 'https://www.youtube.com/embed/x4BMN0qWVFI?si=g4HNHvMnZ3npv3Y_'
     }
   ];
 
+
+  constructor(private _sanitizer: DomSanitizer){
+    this.gameProjectData.forEach(data => {
+      if (data.youtube !== undefined) {
+        data.safeYoutubeUrl = this._sanitizer.bypassSecurityTrustResourceUrl(data.youtube);
+      }
+    });
+  }
 }

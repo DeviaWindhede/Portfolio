@@ -25,51 +25,79 @@
     <div class="post__entry">
         <h3>Summary</h3>
         <p>
-            a hitbox controller made in cardboard using the <a href="https://gp2040-ce.info/">GP2040-CE</a> mapping software 
-            mounted to a Raspberry Pi Pico
+            A hitbox controller using the <a href="https://gp2040-ce.info/">GP2040-CE</a> mapping software 
+            mounted to a Raspberry Pi Pico. Case is a cardboard box and all key switches are friction fitted.
         </p>
         
-        <hr>
-
-        <h3>build</h3>
-
-        <img
-            src="/assets/img/posts/shitbox/layout.jpg"
-            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
-            height="784"
-            width="720"
-            alt="">
-
-        <img
-            src="/assets/img/posts/shitbox/board-soldering.jpg"
-            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
-            height="1015"
-            width="960"
-            alt="">
-
-        <p>
-            Daisy chaining the switches
-        </p>
-        <img
-            src="/assets/img/posts/shitbox/switch-soldering.jpg"
-            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
-            height="560"
-            width="960"
-            alt="">
-
-        <img
-            src="/assets/img/posts/shitbox/wiring.jpg"
-            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
-            height="620"
-            width="960"
-            alt="">
-
         <img
             src="/assets/img/posts/shitbox/final.jpg"
             sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
             height="571"
             width="960"
             alt="">
+        <hr>
+
+        <h3>build</h3>
+        <p>
+            With the game Street Fighter 6 being released, I started playing using a regular keyboard. However as I was also new to Stockholm, I wanted to 
+            attend the local Street Fighter scene. Though playing on a keyboard meant that I would not be able to play like I am used to since they 
+            use game consoles instead of PC setups. So the closest thing I could get to playing with a keyboard was to purchase a "Hitbox" controller. 
+            Unfortunately being a broke student recently moved to Stockholm, I did not have the funds for one. So I decided to build my own instead!  
+        </p>
+
+        <p>
+            I asked around at The Game Assembly if anyone had a large cardboard box just laying around that I could use, and one of the teachers at the 
+            school gave me an Immortal Unchained Collector's Edition box to use! As soon as I got home, I immediately began carving out my 
+            desired button layout and started daisy-chaining the key switches' ground input. 
+            This was also my first time soldering, so it was quite difficult and the results were not the prettiest, but it worked!
+        </p>
+        <div class="common-grid grid-descriptor">
+            <img
+                src="/assets/img/posts/shitbox/layout.jpg"
+                sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
+                height="784"
+                width="720"
+                alt=""
+                class="child-padding"
+            >
+            <img
+                src="/assets/img/posts/shitbox/switch-soldering.jpg"
+                sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
+                height="560"
+                width="960"
+                alt=""
+                class="child-padding"
+            >
+        </div>
+
+        <p>
+            After all buttons were grounded properly, I started connecting the buttons to the board itself. I was using a Raspberry PI Pico and the 
+            <a href="https://gp2040-ce.info/">GP2040-CE</a> open source software. 
+        </p>
+        <img
+            src="/assets/img/posts/shitbox/board-soldering.jpg"
+            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
+            height="338"
+            width="320"
+            alt=""
+            class="child-padding"
+        >
+
+        <p>
+            After some minor burns, sweat and tears (mostly tears), I finished connecting everything with the worst cable management 
+            know to mankind and tested it out. Thankfully, it worked on the first try and I've been using it ever since! 
+            Sometimes a button does fall out of the case from time to time, but it does allow me to play on any type of platform! c:
+        </p>
+
+        <img
+            src="/assets/img/posts/shitbox/wiring.jpg"
+            sizes="(min-width: 75em) 25vw, (min-width: 56.25em) 33vw, (min-width: 37.5em) 50vw, 100vw"
+            height="620"
+            width="960"
+            alt=""    
+            class="child-padding"
+        >
+
     </div>
     <app-back-to-top-btn></app-back-to-top-btn>
 </article>

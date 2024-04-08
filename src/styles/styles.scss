@@ -58,6 +58,26 @@ $palette-3: #910a67;
     margin-top: 1rem;
 }
 
+@media all and (max-width: 37.5em) {
+    .child-padding {
+        padding: 1rem 0;
+    }
+}
+@media all and (min-width: 37.5em) {
+    .child-padding {
+        padding: 1rem;
+    }
+}
+
+.post__entry > img {
+    display: block;
+    margin: 0 auto;
+}
+
+.grid-descriptor {
+    margin: auto 0;
+}
+
 .common-grid {
     display: grid;
     grid-gap: 0px;

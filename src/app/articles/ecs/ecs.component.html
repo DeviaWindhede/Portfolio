@@ -25,9 +25,10 @@
     <div class="post__entry">
         <h3>Summary</h3>
         <p>
-            An Entity Component System implementation that utilizes signatures.
-            Addtionally, this implementation use static polymorphism for indexing and
-            constant look up time and assignment within all component related containers.
+            An Entity Component System implementation that utilizes signatures for entity asignment filtering in systems. 
+            This implementation uses templates to make the development process easier, where everything "just works" when getting 
+            and assigning component types. It also uses static polymorphism for indexing, constant look up time and assignment 
+            within all component related containers to improve performance.
         </p>
         
         <hr>
@@ -36,24 +37,26 @@
         <p> 
             When writing a game engine, using some type of component system is a common approach for modular development.
             However since these components need to be stored somewhere, it can result in unaligned memory which can significantly slow
-            down the performance of the application due to system cache. Addtionally, inheritance can become a huge issue as the
-            scale of the project increases with time.
-            Using an Entity-Component-System is an approach to solve this problem.
-            <br><br>
+            down the performance of the application due to system cache. Inheritance can become a huge issue as the
+            scale of the project increases with time. Using an Entity-Component-System can solve these issues.
+        </p>
+
+        <p>
             An ECS uses a data driven style of development and has all components aligned in memory, similar to the object pool pattern.
-            One of the side effects to this approach is accessing and manipulating blocks of memory becomes VERY easy.
-            And as a person who specializes in core engine and graphics programming, this was the primary reason to me pushing for using
-            this when developing our custom engine for our studies at The Game Assembly.
-            <br><br>
-            In this post, I will go through the steps I took during the development of our game engines ECS implementation.
-            It is not perfect and does have room for improvement, but it can still maybe be an interesting read.
+            One of the major perks to this approach is that accessing and manipulating large blocks of memory can become very easy.
+            As a person who specializes in engine and graphics programming, this was the primary reason for me pushing for using
+            this when developing our custom engine during our studies at The Game Assembly.
+        </p>
+        <p>
+            In this post, I will go through the steps taken during the development of our game engine's ECS implementation.
+            It does have room for improvement, however it is a solid foundation and implementing any optimization to the ECS would not alter any interface.
         </p>
 
         <h3>Implementation</h3>
         <p>
             Using an ECS would encompass creating and modifying data containers (components), systems utilizing subsets of these containers and entity registration. 
             The <code>EntityManager</code>, <code>ComponentManager</code> and <code>SystemManager</code> classes are created for these purposes. These objects  
-            encapsulate and handle their data and memory allocation by themselves. Additionally, to make the utilization of these objects more straight-forward during implementation, 
+            encapsulate and handle their data and memory allocation by themselves. Additionally, to make the utilization of these objects more straight-forward during development, 
             the <code>World</code> facade object is created.
         </p>
         <br>
@@ -66,7 +69,7 @@
 
         <h4>EntityManager</h4>
         <p>
-            EntityManager text
+            The EntityManager is a glorified FIFO-queue, where an entity is claimed and returned using the Create and Destroy methods. 
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'5aaa69ef630619b2d96e17bf04a01c38'"></ngx-gist>
@@ -74,7 +77,9 @@
 
         <h4>ComponentManager</h4>
         <p>
-            ComponentManager text
+            A <code>std::vector</code> is currently only used for convenience since a custom allocator is not implemented at the moment of creating this system. 
+            The container initialization process lies within the component registration, but it will be pool allocated in the future. 
+            Additionally, myComponentContainers will only include pointer offsets to a base memory location of the aforementioned block allocation to enhance cache utilization. 
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'f5809add39018ab7cf141e1726d13837'"></ngx-gist>
@@ -82,7 +87,8 @@
 
         <h4>SystemManager</h4>
         <p>
-            SystemManager text
+            Similar to the ComponentManager, a dynamic container is used for convenience and is something that will be changed in the future. 
+            The params available when Registering a system is used for custom constructors, allowing the developers to use whatever information the desire.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'a496beaa541c9fe51610adc56595d76e'"></ngx-gist>
@@ -91,29 +97,33 @@
         <h4>Performance issues :c</h4>
         <p>
             When initially implementing the ECS, getting a working look-up table is really important.
-            So the most obvious way of doing this is by using the <code>std::unordered_map</code> container.
-            However since the systems will perform <b>A LOT</b> of <code>GetComponent</code> calls, the performance losses
-            from using a map really starts to add up. It also only gets worse with each additional component in the ECS.
+            The naive solution to this problem is using the <code>std::unordered_map</code> container.
+            However since the systems will most likely perform <b>A LOT</b> of <code>GetComponent</code> calls, the performance losses
+            from using an unordered map will really start to add up. 
+            This something that also only gets worse with each additional component registered in the ECS.
         </p>
         <h4>Solution!</h4>
         <p>
             Using the Curiously recurring template pattern (CRTP) you are able to use static polymorphism, and
-            so by storing the component container index in the component itself instead, you are able to get 
-            the index directly from the templated variable without knowning the type. Therefore bypassing the need for 
-            a look up table for Component->ComponentContainer
+            so by storing the component container index "within" the component type itself, you are able to get 
+            the index directly from the templated variable without knowning the type. 
+            Therefore bypassing the need for a separate look up table used for getting each component container.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'3c83a84fb04b4757cf4b986fa6f3576b'"></ngx-gist>
         </div>
         <p>
-            You may notice at all container poiner locations can also be block allocated, which 
-            it is not at the moment. So a potential improvement for this would be to pool allocate the containers.
+            You may notice at all containers are not placement allocated. 
+            As previously stated, it is due to no custom allocator being implemented at the moment and all containers will be pool allocated at a later date.
         </p>
         <h3>Conclusion</h3>
         <p>
-            This is the ECS that is being used in the custom game engine we made at The Game Assembly, 
-            and it has worked really well! I really do recommend implementing an ECS if you haven't already! 
-            The source code for our implementation will be linked at a later date on this page. 
+            This is the ECS that has been used in the custom game engine we are developing at The Game Assembly, and it has worked really well! 
+            It is quite RAM hungry if unproperly set up, but if the developers specify the desired component container size during component registration 
+            it should be accounted for. 
+            I really do recommend implementing an ECS if you haven't already! 
+            Especially since a data driven development process is a super useful and powerful tool.   
+            The source code for this implementation will be linked at a later date on this page! 
         </p>
     </div>
     <app-back-to-top-btn></app-back-to-top-btn>

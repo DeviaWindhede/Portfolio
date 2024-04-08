@@ -2,17 +2,3 @@ a {
     cursor: pointer;
 }
 
-.grid-descriptor {
-    margin: auto 0;
-}
-
-@media all and (max-width: 37.5em) {
-    .child-padding {
-        padding: 1rem 0;
-    }
-}
-@media all and (min-width: 37.5em) {
-    .child-padding {
-        padding: 1rem;
-    }
-}

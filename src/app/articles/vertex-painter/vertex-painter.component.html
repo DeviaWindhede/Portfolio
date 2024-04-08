@@ -20,11 +20,11 @@
             A Vertex Painter that stores vertex colors within a texture instead of 
             the model. Each texel represents a vertex and its corresponding color. 
             One texture is generated for each mesh that has been painted in a scene (including sub-meshes). 
-            Texture file names are identical to the mesh name, however a <code>_x</code> post-fix that represents the sub mesh index is also added
+            Texture file names are identical to the mesh name, however a <code>_x</code> post-fix that represents the sub mesh index is also added.
         </p>
         <p>
             Two binary files are also generated, one of which includes all material binding information, and the other paint instance ids. These files are read from on scene load and 
-            determine material binding and UV coordinates within the vertex shader
+            determine material binding and UV coordinates within the vertex shader.
         </p>
 
         <hr>
@@ -64,7 +64,7 @@
             Two of these RTVs, the "WorldPosition" and the "Effects" RTV, contains some information that could be used to accommodate this. 
             The world position is self explanatory, however the Effects RTV is a little bit special. It was a R8G8_UNORM RTV, meaning there was room for blue and alpha components
             that could be used to fit in the EntityID. If we combine these two uint8s into a singular uint16, we can potentially access all available EntityIDs 
-            within our scene's current scope. When this was implemented, all data needed from the mouse's screen space position could be sampled accordingly
+            within our scene's current scope. When this was implemented, all data needed from the mouse's screen space position could be sampled accordingly.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'73d0c768cea1e65593696c1c7ee357fe'"></ngx-gist>
@@ -73,7 +73,7 @@
             <i>
                 NOTE: The world position can be reconstructed from the depth buffer and a world position RTV is not needed. 
                 However we already had the world position RTV prior to implementing the vertex painter 
-                for debugging and convenience purposes, which is why was used in this implementation
+                for debugging and convenience purposes, which is why was used in this implementation.
             </i>
         </p>
 
@@ -105,7 +105,7 @@
             One of the greatest challenges when creating this tool is deciding on a texture format. 
             My approach to this problem was to assign colors as if they were part of a jagged uint32 array with a size equal to the texture size. 
             Each entry would represent a vertex color and its array location would be based on the SV_VertexID semantic. 
-            What's tricky about this however, is knowing where the intial UV location each instance should derive from
+            What's tricky about this however, is knowing where the intial UV location each instance should derive from.
         </p>
         <p>
             At first I considered linking the initial index to the SV_InstanceID semantic, but discarded that thought since culling would have a severe impact. 
@@ -150,17 +150,17 @@
         <p>
             The first image (left-to-right on larger resolutions) is a 22x3 snippet from the of the top-left most UVs of a 1024x1024 vertex color texture that is currently used within one of our games. 
             The alpha channel has been set to 255 to be able to visualize the texture structure. Since the (0, 0) color is {{'{ 20, 0, 0, 0 }'}}, it means that 
-            the current mesh has a vertex count of 20, meaning every 20 * vertexPaintedIndex + 1 pixels in the texture represents another mesh instance
+            the current mesh has a vertex count of 20, meaning every 20 * vertexPaintedIndex + 1 pixels in the texture represents another mesh instance.
         </p>
         <p>
-            Second image represents how the data gets aligned when the pixel data needs to wrap to the next row
+            Second image represents how the data gets aligned when the pixel data needs to wrap to the next row.
         </p>
 
         <h4>Vertex color mapping</h4>
         <p>
             Once the format is established, all that is left to allow painting is to save the color information to an SRV and have it bound as a vertex shader resource. 
             To do this, I created the vertex texture with the dynamic usage- and cpu write flags enabled during editor mode. 
-            Additionally, a staging texture was used for copying data during a write-discard mapping operation to the target SRV
+            Additionally, a staging texture was used for copying data during a write-discard mapping operation to the target SRV.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'09de3d0826021d041c1d1d8359cf3193'"></ngx-gist>
@@ -170,7 +170,7 @@
             multiple meshes, this means each sub-mesh is also given its own texture. Due to this a "_x" post-fix is added to the file name, where x is replaced with the sub mesh index. 
             Generated vertex color textures use the R8G8B8A8_UNORM color format, since higher detail levels are rarely needed. It is possible to combine 
             these textures into a larger texture atlas, and although this is not implemented as of writing this article, it is something that will be implemented in the future! 
-            The reserved (0,0) slot could also be used for vertex colors instead, since a constant buffer would most likely be needed
+            The reserved (0,0) slot could also be used for vertex colors instead, since a constant buffer would most likely be needed.
         </p>
 
         <h4>Vertex texture binding</h4>
@@ -178,7 +178,7 @@
             The vertex color output is generated by simply sampling the texture that was generated by the Vertex Painter. 
             Since we are sampling from the texture <a (click)="scrollToElement(vertexTextureFormat)">we already know the format to</a>, 
             the UV locations are calculated the same way as when they were written to the texture. However since the need to get the vertex count, it is also sampled 
-            from the reserved (0,0) location
+            from the reserved (0,0) location.
         </p>
 
         <div class="code-block">
@@ -188,7 +188,7 @@
         <p>
             All vertex color textures are assigned the same dimensions (currently 1024x1024px). However a potential optimization would be to dynamically alter the texture size depending 
             on the amount of meshes that has been painted on. There would also be no need to change any vertex shader or painting logic since they base their indexing off of the 
-            texture dimensions at runtime. Though to save time when implementing this tool, this was never implemented
+            texture dimensions at runtime. Though to save time when implementing this tool, this was never implemented.
         </p>
 
         <h4>Material binding</h4>
@@ -214,13 +214,13 @@
         <p>
             To enable further customization, some brush hardness and color strength options were also added. 
             Hardness refers to a feathering effect, and color strength the base line opacity of the selected color that whilst painting. 
-            The implementation is quite simple and is just a distance check with some multipliers
+            The implementation is quite simple and is just a distance check with some multipliers.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'b29a3012189e6bfe0d756a2595164aac'"></ngx-gist>
         </div>
         <p>
-            Here's a showcase on how different brush settings can affect painting
+            Here's a showcase on how different brush settings can affect painting.
         </p>
         <img
             src="/assets/img/posts/vertex-painter/brush-settings.gif"
@@ -238,7 +238,7 @@
             This way of implementing a vertex painter is quite handy when it comes to debugging since all you have to do is to open a texture file and look at it. 
             Additionally, the performance gains from not mapping too much data to the GPU are also quite nice! 
             Though by having so many different textures, it does induce a penalty, especially to the RAM. 
-            This will be somewhat reduced in the future, since they will be combined into a texture atlast
+            This will be somewhat reduced in the future, since they will be combined into a texture atlas.
         </p>
         <p>
             It is currently quite fragile when it comes to scene hierarchy, which means it can realistically only be used after set dressing is 
@@ -248,7 +248,7 @@
         <p>
             Here's an example of the tool in action, showcasing it's usage (it's really just me messing about). 
             The pixel shader used for this showcase simply lerps between the bound material textures, using the vertex colors as the lerp interpolator value. 
-            These values are then used on the albedo, pixel normal, material and effect G-buffer output textures 
+            These values are then used on the albedo, pixel normal, material and effect G-buffer output textures. 
         </p>
         <img
             src="/assets/img/posts/vertex-painter/vertex-binding.gif"
@@ -267,7 +267,7 @@
         <p>
             The figure below visualizes how the vertex painter causes vertex colors to only be applied to an affected (painted) area, even when using instanced rendering. 
             The vertex normals without any face culling are shown to more easily showcase the mesh arrangement of the scene. The shown meshes are missing the "roof" because that 
-            part of the model is another sub-mesh. These images were gathered using RenderDoc
+            part of the model is another sub-mesh. These images were gathered using RenderDoc.
         </p>
         <img
             src="/assets/img/posts/vertex-painter/affected-meshes.gif"
