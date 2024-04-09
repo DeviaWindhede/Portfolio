@@ -23,12 +23,15 @@
 ></div>
 <div class="navbar_mobile_sidebar" [ngClass]="{ 'is-hidden' : myShouldHideMobileOverlay }">
     <ul class="navbar__menu">
+        <li>
+            <a class="mobile-nav" routerLink="">Home</a>
+        </li>
         <li 
             *ngFor="let data of links"
             class="navbar-item"
             (click)="toggleMobileNavbar()"
         >
-            <a routerLink="{{data.link}}" [fragment]="data.fragment" target="_self">{{data.name}}</a>
+            <a class="mobile-nav" routerLink="{{data.link}}" [fragment]="data.fragment" target="_self">{{data.name}}</a>
         </li>
     </ul>
 </div>

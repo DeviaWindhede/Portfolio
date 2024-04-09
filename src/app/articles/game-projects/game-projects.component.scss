@@ -5,7 +5,7 @@ iframe {
 
 .center-image {
     display: block;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .common-grid--text > * {
@@ -14,4 +14,9 @@ iframe {
 
 .common-grid--separator {
     margin-top: 2rem;
+}
+
+hr {
+    margin-top: calc(2rem + 1vw);
+    margin-bottom: calc(2rem + 1vw);
 }

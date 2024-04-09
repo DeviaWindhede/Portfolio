@@ -166,7 +166,7 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "Unity",
-      imagePaths: [ "otto.png", "otto2.png" ],
+      imagePaths: [ ],
       contributions: [
         "Map Editor and procedural map speed adaptation",
         "Player controller"

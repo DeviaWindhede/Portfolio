@@ -13,6 +13,17 @@ $page-margin: 6vw;
     background-color: $palette-3;
 }
 
+.mobile-nav {
+    padding: 1rem !important;
+    font-size: 24px;
+    border-top: 1px $dark solid;
+}
+
+.mobile-nav:hover {
+    background-color: $dark;
+    color: $white !important;
+}
+
 .header {
     background: $palette-3;
     align-items: center;
@@ -86,9 +97,13 @@ $page-margin: 6vw;
 .navbar .navbar__menu {
     display: flex;
     list-style: none;
-    margin: 0 -0.75rem 0 0;
     padding: 0;
 }
+
+.navbar__menu {
+    margin: 0 !important;
+}
+
 @media all and (max-width: 56.1875em) {
 .navbar .navbar__menu {
     display: none;

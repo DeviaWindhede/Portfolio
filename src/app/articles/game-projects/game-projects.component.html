@@ -2,8 +2,7 @@
 <article class="post wrapper">
     <div class="hero hero--full">
         <header>
-            <h1>TGA Projects</h1>
-            <p>Some descriptor</p>
+            <h1>Group Projects</h1>
         </header>
         <figure class="hero__image post__featured-image video-container">
             <video autoplay muted loop id="game-projects-preview">
@@ -13,7 +12,6 @@
     </div>
 
     <div class="post__entry">
-        <h2>Game Projects</h2>
         <div *ngFor="let data of gameProjectData; let i = index">
             <div 
                 class="common-grid"
@@ -78,6 +76,7 @@
                     </div>
                 </ng-container>
             </ng-container>
+            <hr *ngIf="i < gameProjectData.length - 1">
         </div>
     </div>
     <app-back-to-top-btn></app-back-to-top-btn>
