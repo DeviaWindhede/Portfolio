@@ -14,6 +14,11 @@ $max-hero-section-height: 20rem;
   scroll-margin: $header-height;
 }
 
+.video-container {
+    height:  30rem;
+    min-height: 30rem;
+}
+
 .hero {
   background: $hero-bg;
   margin-bottom: $grid-gap;

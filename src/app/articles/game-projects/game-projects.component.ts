@@ -52,7 +52,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde.png", "place-holde.png" ],
+      imagePaths: [ "on-the-goose.png" ],
       contributions: [
         "Vertex painting, ECS, VFX Timeline implementaiton, Particle System, Animation blending",
         "Post processing, Toon shader and Lighting implementation",

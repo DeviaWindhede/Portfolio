@@ -20,11 +20,11 @@
             A Vertex Painter that stores vertex colors within a texture instead of 
             the model. Each texel represents a vertex and its corresponding color. 
             One texture is generated for each mesh that has been painted in a scene (including sub-meshes). 
-            Texture file names are identical to the mesh name, however a <code>_x</code> post-fix that represents the sub mesh index is also added.
+            Texture file names are identical to the mesh name, however a "_x" post-fix that represents the sub mesh index is also added.
         </p>
         <p>
-            Two binary files are also generated, one of which includes all material binding information, and the other paint instance ids. These files are read from on scene load and 
-            determine material binding and UV coordinates within the vertex shader.
+            Two binary files are also generated, one of which includes all material binding information, and the other vertex texture UV-coordinate indices. 
+            These files are read from on scene load and determine material binding and UV coordinates within the vertex shader.
         </p>
 
         <hr>
@@ -39,32 +39,34 @@
             the area of development I would like to specialize in!
         </p>
         <p>
-            This text will go through some of the intricacies involed in developing a vertex painting tool that stores all vertex color information in textures, as 
+            This text will go through some of the intricacies involed in developing a vertex painting tool that stores all vertices' color information in textures, as 
             opposed to storing it directly within a mesh instance. Since a lot of engine and rendering pipeline changes had to be made to make this implementation work smoothly, 
             most of it won't be mentioned in this text and it will mostly focus on the steps taken to texture mapping, binding and how it is read within the vertex shader.
         </p>
         <p>
-            Topics at hand:
+            <b>Topics at hand:</b>
         </p>
-        <ol>
-            <li>Converting the mouse position from screen space to world space</li>
-            <li>Fetching the mouse hovered entity's ID and its corresponding mesh</li>
-            <li>Perform a sphere intersection test on all vertices within the brush radius (previewing intersecting vertices is also be done here)</li>
-            <li>Vertex color texture format, mapping and binding</li>
-            <li>Brief brush tool customization</li>
-        </ol>
+        <i>    
+            <ol>
+                <li>Converting the mouse position from screen space to world space</li>
+                <li>Fetching the mouse hovered entity's ID and its corresponding mesh</li>
+                <li>Perform a sphere intersection test on all vertices within the brush radius (previewing intersecting vertices is also be done here)</li>
+                <li>Vertex color texture format, mapping and binding</li>
+                <li>Brief brush tool customization</li>
+            </ol>
+        </i>
 
         <h3>Implementation</h3>
         <h4>Mouse position related data collection</h4>
         <p>
-            To know where the mouse is relative to the hovered entity we need both the entity's ID and the mouse's position in world space. 
+            To know where the mouse is relative to the hovered entity we need both the entity's ID and the mouse position in world space. 
             Unfortunately we lacked screen-to-ray collection testing support within our engine at the moment of implementing this tool, so a few work arounds were required. 
 
             Our engine uses a deferred rendering pipeline, and so a few different RTVs are written to when rendering to the G-buffer. 
-            Two of these RTVs, the "WorldPosition" and the "Effects" RTV, contains some information that could be used to accommodate this. 
-            The world position is self explanatory, however the Effects RTV is a little bit special. It was a R8G8_UNORM RTV, meaning there was room for blue and alpha components
-            that could be used to fit in the EntityID. If we combine these two uint8s into a singular uint16, we can potentially access all available EntityIDs 
-            within our scene's current scope. When this was implemented, all data needed from the mouse's screen space position could be sampled accordingly.
+            Two of these RTVs, the "WorldPosition" and the "Effects" RTV, contains some information that could be used to accomplish this. 
+            The world position is self explanatory, however the Effects RTV is a little bit of a special case. It was a R8G8_UNORM RTV, meaning there was room for blue and alpha components
+            that could be used to fit in the EntityID. If we combine these <b>two uint8s</b> into a <b>singular uint16</b>, we can potentially access all available EntityIDs 
+            within our scene's current scope. When this was implemented, all data needed from the mouse screen space position could be sampled accordingly.
         </p>
         <div class="code-block">
             <ngx-gist [gistId]="'73d0c768cea1e65593696c1c7ee357fe'"></ngx-gist>
@@ -79,7 +81,7 @@
 
         <h4>Vertex intersection and preview</h4>
         <p>
-            Once the mouse's world position and hovered entity's ID is fetched, the relative mouse position in model space is then compared to against all vertices 
+            Once the mouse world position and hovered entity's ID is fetched, the relative mouse position in model space is then compared to against all vertices 
             within all meshes contained in the entity using the brush radius. This vertex container is updated every time the mouse is moved, and all intersecting vertices 
             are used during brush preview and all future painting operations.
         </p>
