@@ -1,4 +1,6 @@
-@import 'main';
+@import 'vars';
+
+$scale-amount: 1.15;
 
 .c-card {
     border-radius: $border-radius;
@@ -56,8 +58,8 @@
   width: 100%;
 }
 .c-card:hover .c-card__image img {
-  -webkit-transform: scale(1.15);
-          transform: scale(1.15);
+  -webkit-transform: scale($scale-amount);
+          transform: scale($scale-amount);
 }
 .c-card__header {
   position: absolute;
@@ -104,7 +106,8 @@
   margin: 0;
   text-transform: uppercase;
 }
-.card:hover .card__image img{
-  -webkit-transform:scale(1) rotate(-360deg);
-  transform:scale(1) rotate(-360deg)
+
+.card:hover .card__image img {
+  -webkit-transform: scale(1);
+  transform: scale(1)
 }

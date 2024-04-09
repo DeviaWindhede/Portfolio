@@ -1,4 +1,4 @@
-@import 'main';
+@import 'vars';
 
 .outer {
   display: flex;
@@ -27,4 +27,10 @@
 
 .container > svg {
   height: 5rem;
+  fill: $white;
+  opacity:.6;
+}
+
+.container > svg:hover{
+  opacity:1
 }

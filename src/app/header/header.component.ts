@@ -18,15 +18,10 @@ class HeaderLink
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @ViewChild('mobileNavbar') mobileNavbar!: ElementRef;
-  @ViewChild('showMobileNavbarButton') showMobileNavbarButton!: ElementRef;
-
-  myNewScrollPosition: number = 0;
   myLastScrollPosition: number = 0;
-  myScrollTarget: number = 250;
 
   myShouldMinimize: boolean = false;
-  myShouldShowMobileOverlay: boolean = false;
+  myShouldHideMobileOverlay: boolean = true;
 
   links: HeaderLink[] = [
     { link: "vertex-painter", name: "Specialization" },
@@ -41,41 +36,18 @@ export class HeaderComponent {
 
 
   toggleMobileNavbar(): void {
-    this.myShouldShowMobileOverlay = !this.myShouldShowMobileOverlay;
-  }
-
-  @HostListener('document:mousedown', ['$event'])
-  onGlobalClick(event: any): void {
-    if (!this.myShouldShowMobileOverlay) { return; }
-    
-     if (!this.mobileNavbar.nativeElement.contains(event.target) && !this.showMobileNavbarButton.nativeElement.contains(event.target) ) {
-        this.myShouldShowMobileOverlay = false;
-     }
+    this.myShouldHideMobileOverlay = !this.myShouldHideMobileOverlay;
   }
 
   @HostListener("window:scroll", ['$event'])
   onWindowScroll(event: any): void {
     this.doScrollUpdate();
   }
-
+  
   doScrollUpdate(): void {
-    this.myLastScrollPosition = window.scrollY;
-    this.myShouldMinimize = false;
-
-    // Scrolling down
-    if (this.myNewScrollPosition < this.myLastScrollPosition && this.myLastScrollPosition > this.myScrollTarget) {
-      this.myShouldMinimize = true;
-    }
-    // Scrolling up
-    else if (this.myNewScrollPosition > this.myLastScrollPosition) {
-      this.myShouldMinimize = true;
-    }
-
-    if (this.myLastScrollPosition < this.myScrollTarget) {
-      this.myShouldMinimize = false;
-    }
-
-    this.myNewScrollPosition = this.myLastScrollPosition;
+    const currentScroll = window.scrollY;
+    this.myShouldMinimize = this.myLastScrollPosition < currentScroll;
+    this.myLastScrollPosition = currentScroll;
   }
 
   scroll(anchor: string): void {
