@@ -1,9 +1,14 @@
 @import 'vars';
 
 $scale-amount: 1.15;
+$border-color: $gray-1;
+$border-width: 1px;
 
 .c-card {
+    border-color: $border-color;
+    border-style: solid;
     border-radius: $border-radius;
+    border-width: $border-width;
     font-size: 0.8239746086rem;
     height: $card-height;
     overflow: hidden;

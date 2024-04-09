@@ -52,7 +52,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "on-the-goose.png" ],
+      imagePaths: [ "on-the-goose.png", "onthegoose-movement.gif" ],
       contributions: [
         "Vertex painting, ECS, VFX Timeline implementaiton, Particle System, Animation blending",
         "Post processing, Toon shader and Lighting implementation",
@@ -71,7 +71,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde.png" ],
+      imagePaths: [ "spite-logo.png", "spite-movement.gif" ],
       contributions: [
         "Deferred rendering, light rendering and post processing",
         "Skeltal mesh, animation import and implementation",
@@ -90,7 +90,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "Friendship Engine (Custom made)",
-      imagePaths: [ "place-holde.png" ],
+      imagePaths: [ "sp5.png" ],
       contributions: [
         "Rendering pipeline and DX11 integration",
         "Shaders and math",
@@ -109,7 +109,7 @@ export class GameProjectsComponent {
         designers: 3
       },
       engine: "TGA's in-house engine",
-      imagePaths: [ "place-holde.png" ],
+      imagePaths: [ ],
       contributions: [
         "Player CCC",
         "Animation system and blending"
@@ -126,7 +126,7 @@ export class GameProjectsComponent {
         designers: 2
       },
       engine: "TGA's in-house engine",
-      imagePaths: [ "place-holde.png" ],
+      imagePaths: [ ],
       contributions: [
         "Player CCC",
         "Animation system and blending",

@@ -10,6 +10,15 @@
     min-height: 30rem;
 }
 
+.hero--full {
+  background-color: $darker;
+  min-height: 15rem;
+}
+
+.heading-padding {
+  margin-bottom: 2rem;
+}
+
 .l-grid {
   display:grid;
   grid-gap:$grid-gap;

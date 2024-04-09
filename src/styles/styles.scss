@@ -249,6 +249,8 @@ html.no-scroll{overflow:hidden;
 }
 body {
     background:$body-bg-color;
+    // background: rgb(38,7,52);
+    // background: radial-gradient(circle, rgba(38,7,52,1) 0%, rgba(17,17,17,1) 93%); 
     color:$text-color;
     font-family:$body-font;
     font-variation-settings:"wght" $font-weight-normal;
